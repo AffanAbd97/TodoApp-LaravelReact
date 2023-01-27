@@ -1,0 +1,10 @@
+.toggled{
+    width: 0;
+    padding: 0;
+    overflow: hidden;
+}
+.btn-absolute{
+    position: absolute;
+    top:60px;
+    left: 56px;
+}
