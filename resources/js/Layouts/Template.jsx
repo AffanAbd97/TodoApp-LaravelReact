@@ -1,15 +1,16 @@
 import Sidebar from '@/Components/Sidebar';
 import { Link, Head } from '@inertiajs/react';
 
-export default function Template({ children,props }) {
-    // console.log(props);
+export default function Template({ children,list,tag }) {
+    console.log(list);
+    console.log(tag);
     return (
         <>
             <Head title="Todo-List" />
             <div className="relative h-screen bg-gray-100  p-8">
             <div className='flex gap-4 h-full'>
 
-            <Sidebar props={props}/>
+            <Sidebar listprops={list} tagprops={tag}/>
             <main className='grow'>{children}</main>
             </div>
               

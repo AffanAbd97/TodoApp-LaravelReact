@@ -5,7 +5,7 @@ import { FaPlus, FaCalendarAlt } from "react-icons/fa";
 import { MdNavigateNext } from "react-icons/md";
 
 export default function Today(props) {
-    console.log(props);
+ 
     const [values, setValues] = useState({
         title: "",
         description: "",
@@ -17,21 +17,9 @@ export default function Today(props) {
         
       })
       
-      function handleChange(e) {
-        const key = e.target.id;
-        const value = e.target.value
-        setValues(values => ({
-            ...values,
-            [key]: value,
-        }))
-      }
-    const submit = (e) => {
-        e.preventDefault();
-
-        router.post(route('save'), values);
-    };
+ 
     const menu = useRef();
-    const btnRef = useRef();
+  
 
     const showNavbar = (valTitle,valDescription,valTags,valList,valDate) => {
         console.log(valTitle);
@@ -62,10 +50,10 @@ export default function Today(props) {
         menu.current.classList.toggle("toggled");
         //   btnRef.current.classList.toggle("btn-absolute");
     };
-    console.log(values);
+    console.log(props.list);
     return (
         <>
-            <Template props={props.list}>
+            <Template list={props.list} tag={props.tag}>
                 <Head title="Todo-List" />
                 <div className="flex h-full">
                     <div className="p-6 w-full ">

@@ -6,50 +6,86 @@ import { FaRegCalendarAlt } from "react-icons/fa";
 import { BiLogOut } from "react-icons/bi";
 import { BsListCheck, BsStickyFill, BsPlusLg } from "react-icons/bs";
 import "../../css/Sidebar.css";
-export default function Sidebar(props) {
-    console.log(props);
-    const [color, setColor] = useState("bg-blue-500");
+export default function Sidebar({listprops,tagprops}) {
+  
+    const [color, setColor] = useState("bg-[#38bdf8]");
     const [list, setList] = useState({
         nameList: "",
-        color:color
-      });
+        color: color,
+    });
+    const [tag, setTag] = useState({
+        nameTag: "",
+        color: color,
+    });
+
+    const colorset = [
+        "bg-[#38bdf8]",
+        "bg-[#fda4af]",
+        "bg-[#b91c1c]",
+        "bg-[#fde047]",
+        "bg-[#a855f7]",
+        "bg-[#4ade80]",
+        "bg-[#a1a1aa]",
+    ];
     const navRef = useRef();
-    const listRef = useRef();
+
+    const compTag = useRef();
+    const compList = useRef();
     const btnRef = useRef();
     const colorTag = useRef();
     const listMenu = useRef();
 
+    const listComp = () => {
+        compList.current.classList.toggle("hidden");
+    };
+    const tagComp = () => {
+        compTag.current.classList.toggle("hidden");
+    };
     function handleChange(e) {
         const key = e.target.id;
-        const value = e.target.value
-        setList(list => ({
+        const value = e.target.value;
+        setList((list) => ({
             ...list,
             [key]: value,
-            color:color
-        }))
-      }
-      
+            color: color,
+        }));
+    }
+    function handleTagChange(e) {
+        const key = e.target.id;
+        const value = e.target.value;
+        setTag((tag) => ({
+            ...tag,
+            [key]: value,
+            color: color,
+        }));
+    }
 
-      const submiList = (e) => {
+    const submiTag = (e) => {
         e.preventDefault();
 
-        router.post(route('save.list'), list);
-        setList(list => ({
+        router.post(route("save.tag"),tag);
+        setTag((tag) => ({
+            ...tag,
+            nameTag: "",
+        }));
+    };
+    const submiList = (e) => {
+        e.preventDefault();
+
+        router.post(route("save.list"), list);
+        setList((list) => ({
             ...list,
-            nameList: '',
-           
-        }))
+            nameList: "",
+        }));
     };
-    const addMenu = () => {
-        listMenu.current.classList.toggle("toggled");
-    };
+  
     const showNavbar = () => {
         navRef.current.classList.toggle("toggled");
         btnRef.current.classList.toggle("btn-absolute");
     };
-    const changeColor = (value,old) => {
+    const changeColor = (value, old) => {
         colorTag.current.classList.remove(old);
-       setColor(value);
+        setColor(value);
     };
     useEffect(() => {
         // Update the document title using the browser API
@@ -134,101 +170,118 @@ export default function Sidebar(props) {
                             </Link>
                             <div className="px-2 rounded bg-slate-100">1</div>
                         </li>
-                   
                     </ul>
                 </div>
                 <hr className="mb-6" />
-                    <h2 className="font-bold">List</h2>
-                <div className="mb-6 overflow-y-auto min-h-[150px]">
-                    <ul className="  ">
-                        {props.props.map((index,key)=>{
-                        //    current.classList.add(index.color)
-                            return(
+                <h2 className="font-bold">List</h2>
+                <div className="mb-6 overflow-y-auto min-h-[150px] ">
+                    <ul className=" ">
+                        {listprops.map((index, key) => {
+                            //    current.classList.add(index.color)
+                            return (
                                 <li className="w-full p-2  rounded hover:bg-slate-400 flex justify-between">
-                                <Link href="" className="flex items-center text-md">
-                                    <div className={`h-4 w-4 rounded ${index.color}`}></div>
-                                    <span className="ml-4 font-semibold hover:font-bold">
-                                        {index.name}
-                                    </span>
-                                </Link>
-                                <div className="px-2 rounded bg-slate-100">1</div>
-                            </li>
+                                    <Link
+                                        href=""
+                                        className="flex items-center text-md"
+                                    >
+                                        <div
+                                            className={`h-4 w-4 rounded ${index.color}`}
+                                        ></div>
+                                        <span className="ml-4 font-semibold hover:font-bold">
+                                            {index.name}
+                                        </span>
+                                    </Link>
+                                    <div className="px-2 rounded bg-slate-100">
+                                        1
+                                    </div>
+                                </li>
                             );
                         })}
-                     
-                       
                     </ul>
                     <div className="w-full p-2  rounded hover:bg-slate-400 flex justify-between">
-                        <Link href="" className="flex items-center text-md">
+                        <button
+                            onClick={() => listComp()}
+                            className="flex items-center text-md w-full"
+                        >
                             <BsPlusLg />
                             <span className="ml-4 font-semibold hover:font-bold">
                                 Add New List
                             </span>
-                        </Link>
+                        </button>
                     </div>
-                    <div className="absolute bg-white p-2 rounded">
-                        <form action="" onSubmit={submiList}>
-                            <div className="flex gap-4 mb-2">
+                    <div
+                        ref={compList}
+                        className="absolute bg-white p-2 rounded hidden -mt-80"
+                    >
+                        <div className="flex items-center justify-between mb-4">
+                            <div>Add New List</div>
+                            <div
+                                className="px-2 rounded text-right  hover:font-semibold cursor-pointer"
+                                onClick={() => listComp()}
+                            >
+                                X
+                            </div>
+                        </div>
+
+                        <form action="" onSubmit={submiList} >
+                            <div className="flex gap-4 mb-4">
                                 <div
                                     ref={colorTag}
                                     className="h-4 w-4 rounded"
-                                ></div>{" "}
-                                <input id="nameList" className=" h-4 text-xs" type="text" value={list.nameList} onChange={handleChange}/>
+                                ></div>
+                                <input
+                                    id="nameList"
+                                    className="w-full h-4 text-xs rounded border-1 border-slate-300 focus:border-slate-300"
+                                    type="text"
+                                    value={list.nameList}
+                                    onChange={handleChange}
+                                />
                             </div>
-                            <div className="flex gap-2 flex-wrap">
-                                {" "}
-                                <div
-                                   
-                                    className="h-4 w-4 rounded bg-red-500 cursor-pointer" onClick={()=>changeColor('bg-red-500',color)}
-                                ></div>
-                                <div
-                                   
-                                    className="h-4 w-4 rounded bg-blue-100 cursor-pointer" onClick={()=>changeColor('bg-blue-100',color)}
-                                ></div>
-                                <div
-                              
-                                    className="h-4 w-4 rounded bg-slate-100 cursor-pointer" onClick={()=>changeColor('bg-slate-100',color)}
-                                ></div>
-                                <div
-                              
-                                    className="h-4 w-4 rounded bg-gray-500 cursor-pointer" onClick={()=>changeColor('bg-gray-500',color)}
-                                ></div>
-                                <div
-                              
-                                    className="h-4 w-4 rounded bg-yellow-500 cursor-pointer" onClick={()=>changeColor('bg-yellow-500',color)}
-                                ></div>
+                            <div className="flex gap-2 flex-wrap items-center justify-center">
+                                {colorset.map((index) => {
+                                    // console.log(colorset);
+                                    return (
+                                        <div
+                                            className={`h-4 w-4 rounded ${index} cursor-pointer`}
+                                            onClick={() =>
+                                                changeColor(index, color)
+                                            }
+                                        ></div>
+                                    );
+                                })}
+
+                                
                             </div>
-                            <input type="hidden" defaultValue={color}/>
-                            <button type="submit" className="w-full bg-blue-800 mt-5 bottom-0 rounded"  >Submit</button>
+
+                            <button
+                                type="submit"
+                                className="w-full bg-blue-800 mt-5 bottom-0 rounded text-white"
+                            >
+                                Submit
+                            </button>
                         </form>
                     </div>
                 </div>
                 <hr className="mb-6" />
                 <div className="mb-6 h-auto">
-                    <h2 className="font-bold">List</h2>
+                    <h2 className="font-bold">Tags</h2>
 
                     <div className="flex  flex-wrap gap-2">
-                        <Link
+                    {tagprops.map((index, key) => {
+                            //    current.classList.add(index.color)
+                            return (
+                                <Link
                             href=""
                             className="flex items-center text-md  font-bold bg-red-400 rounded py-0.5 px-2 "
                         >
-                            Tag 1
+                            {index.name}
                         </Link>
-                        <Link
-                            href=""
-                            className="flex items-center text-md  font-bold bg-yellow-400 rounded py-0.5 px-2 "
-                        >
-                            Tag 1
-                        </Link>
-                        <Link
-                            href=""
-                            className="flex items-center text-md  font-bold bg-blue-400 rounded py-0.5 px-2 "
-                        >
-                            Tag 1
-                        </Link>
+                            );
+                        })}
+                        
 
                         <button
-                            onClick={addMenu}
+                             onClick={() => tagComp()}
                             className="flex items-center text-md  font-bold bg-slate-400 rounded py-0.5 px-2 "
                         >
                             <BsPlusLg />
@@ -236,6 +289,58 @@ export default function Sidebar(props) {
                                 Add Tag
                             </span>
                         </button>
+                         <div
+                        ref={compTag}
+                        className="absolute bg-white p-2 rounded hidden -mt-36"
+                    >
+                        <div className="flex items-center justify-between mb-4">
+                            <div>Add New Tag</div>
+                            <div
+                                className="px-2 rounded text-right  hover:font-semibold cursor-pointer"
+                                onClick={() => listComp()}
+                            >
+                                X
+                            </div>
+                        </div>
+
+                        <form action="" onSubmit={submiTag} >
+                            <div className="flex gap-4 mb-4">
+                                <div
+                                    ref={colorTag}
+                                    className="h-4 w-4 rounded"
+                                ></div>
+                                <input
+                                    id="nameTag"
+                                    className="mx-auto h-4 text-xs rounded border-1 border-slate-300 focus:border-slate-300"
+                                    type="text"
+                                    value={tag.nameTag}
+                                    onChange={handleTagChange}
+                                />
+                            </div>
+                            <div className="flex gap-2 flex-wrap items-center justify-center">
+                                {colorset.map((index) => {
+                                    // console.log(colorset);
+                                    return (
+                                        <div
+                                            className={`h-4 w-4 rounded ${index} cursor-pointer`}
+                                            onClick={() =>
+                                                changeColor(index, color)
+                                            }
+                                        ></div>
+                                    );
+                                })}
+
+                                
+                            </div>
+
+                            <button
+                                type="submit"
+                                className="w-full bg-blue-800 mt-5 bottom-0 rounded text-white"
+                            >
+                                Submit
+                            </button>
+                        </form>
+                    </div>
                     </div>
                 </div>
                 <div className="flex flex-row h-full">
