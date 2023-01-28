@@ -1,7 +1,7 @@
 import Sidebar from '@/Components/Sidebar';
 import { Link, Head } from '@inertiajs/react';
 
-export default function Home(props) {
+export default function Template({ children }) {
     return (
         <>
             <Head title="Todo-List" />
@@ -9,9 +9,7 @@ export default function Home(props) {
             <div className='flex gap-4 h-full'>
 
             <Sidebar/>
-            <div className=''>
-                <h1>Today</h1>
-            </div>
+            <main className='grow'>{children}</main>
             </div>
               
             </div>
