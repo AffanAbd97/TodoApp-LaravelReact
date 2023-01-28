@@ -14,6 +14,7 @@ export default function Sidebar(props) {
         color:color
       });
     const navRef = useRef();
+    const listRef = useRef();
     const btnRef = useRef();
     const colorTag = useRef();
     const listMenu = useRef();
@@ -33,6 +34,11 @@ export default function Sidebar(props) {
         e.preventDefault();
 
         router.post(route('save.list'), list);
+        setList(list => ({
+            ...list,
+            nameList: '',
+           
+        }))
     };
     const addMenu = () => {
         listMenu.current.classList.toggle("toggled");
@@ -128,48 +134,29 @@ export default function Sidebar(props) {
                             </Link>
                             <div className="px-2 rounded bg-slate-100">1</div>
                         </li>
-                        <li className="w-full p-2  rounded hover:bg-slate-400 flex justify-between">
-                            <Link href="" className="flex items-center text-md">
-                                <FaRegCalendarAlt />
-                                <span className="ml-4 font-semibold hover:font-bold">
-                                    Calendar
-                                </span>
-                            </Link>
-                            <div className="px-2 rounded bg-slate-100">1</div>
-                        </li>
+                   
                     </ul>
                 </div>
                 <hr className="mb-6" />
-                <div className="mb-6">
                     <h2 className="font-bold">List</h2>
-                    <ul>
-                        <li className="w-full p-2  rounded hover:bg-slate-400 flex justify-between">
-                            <Link href="" className="flex items-center text-md">
-                                <div className="h-4 w-4 bg-blue-300 rounded"></div>
-                                <span className="ml-4 font-semibold hover:font-bold">
-                                    Personal
-                                </span>
-                            </Link>
-                            <div className="px-2 rounded bg-slate-100">1</div>
-                        </li>
-                        <li className="w-full p-2  rounded hover:bg-slate-400 flex justify-between">
-                            <Link href="" className="flex items-center text-md">
-                                <div className="h-4 w-4 bg-yellow-200 rounded"></div>
-                                <span className="ml-4 font-semibold hover:font-bold">
-                                    Personal
-                                </span>
-                            </Link>
-                            <div className="px-2 rounded bg-slate-100">1</div>
-                        </li>
-                        <li className="w-full p-2  rounded hover:bg-slate-400 flex justify-between">
-                            <Link href="" className="flex items-center text-md">
-                                <div className="h-4 w-4 bg-red-400 rounded"></div>
-                                <span className="ml-4 font-semibold hover:font-bold">
-                                    Personal
-                                </span>
-                            </Link>
-                            <div className="px-2 rounded bg-slate-100">1</div>
-                        </li>
+                <div className="mb-6 overflow-y-auto min-h-[150px]">
+                    <ul className="  ">
+                        {props.props.map((index,key)=>{
+                        //    current.classList.add(index.color)
+                            return(
+                                <li className="w-full p-2  rounded hover:bg-slate-400 flex justify-between">
+                                <Link href="" className="flex items-center text-md">
+                                    <div className={`h-4 w-4 rounded ${index.color}`}></div>
+                                    <span className="ml-4 font-semibold hover:font-bold">
+                                        {index.name}
+                                    </span>
+                                </Link>
+                                <div className="px-2 rounded bg-slate-100">1</div>
+                            </li>
+                            );
+                        })}
+                     
+                       
                     </ul>
                     <div className="w-full p-2  rounded hover:bg-slate-400 flex justify-between">
                         <Link href="" className="flex items-center text-md">
@@ -192,23 +179,23 @@ export default function Sidebar(props) {
                                 {" "}
                                 <div
                                    
-                                    className="h-4 w-4 rounded bg-yellow-200 cursor-pointer" onClick={()=>changeColor('bg-red-500',color)}
+                                    className="h-4 w-4 rounded bg-red-500 cursor-pointer" onClick={()=>changeColor('bg-red-500',color)}
                                 ></div>
                                 <div
                                    
-                                    className="h-4 w-4 rounded bg-yellow-200 cursor-pointer" onClick={()=>changeColor('bg-blue-100',color)}
+                                    className="h-4 w-4 rounded bg-blue-100 cursor-pointer" onClick={()=>changeColor('bg-blue-100',color)}
                                 ></div>
                                 <div
                               
-                                    className="h-4 w-4 rounded bg-yellow-200 cursor-pointer" onClick={()=>changeColor('bg-slate-100',color)}
+                                    className="h-4 w-4 rounded bg-slate-100 cursor-pointer" onClick={()=>changeColor('bg-slate-100',color)}
                                 ></div>
                                 <div
                               
-                                    className="h-4 w-4 rounded bg-yellow-200 cursor-pointer" onClick={()=>changeColor('bg-gray-500',color)}
+                                    className="h-4 w-4 rounded bg-gray-500 cursor-pointer" onClick={()=>changeColor('bg-gray-500',color)}
                                 ></div>
                                 <div
                               
-                                    className="h-4 w-4 rounded bg-yellow-200 cursor-pointer" onClick={()=>changeColor('bg-yellow-500',color)}
+                                    className="h-4 w-4 rounded bg-yellow-500 cursor-pointer" onClick={()=>changeColor('bg-yellow-500',color)}
                                 ></div>
                             </div>
                             <input type="hidden" defaultValue={color}/>
