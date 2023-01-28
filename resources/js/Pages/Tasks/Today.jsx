@@ -65,7 +65,7 @@ export default function Today(props) {
     console.log(values);
     return (
         <>
-            <Template>
+            <Template props={props.list}>
                 <Head title="Todo-List" />
                 <div className="flex h-full">
                     <div className="p-6 w-full ">
