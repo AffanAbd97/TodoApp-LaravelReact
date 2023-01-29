@@ -92,7 +92,7 @@ export default function Sidebar({listprops,tagprops}) {
 
         colorTag.current.classList.add(color);
     });
-    console.log(list);
+
     return (
         <>
             <div
@@ -227,11 +227,11 @@ export default function Sidebar({listprops,tagprops}) {
                             <div className="flex gap-4 mb-4">
                                 <div
                                     ref={colorTag}
-                                    className="h-4 w-4 rounded"
+                                    className={`h-4 w-4 ${color} rounded`}
                                 ></div>
                                 <input
                                     id="nameList"
-                                    className="w-full h-4 text-xs rounded border-1 border-slate-300 focus:border-slate-300"
+                                    className="mx-auto h-4 text-xs rounded border-1 border-slate-300 focus:border-slate-300"
                                     type="text"
                                     value={list.nameList}
                                     onChange={handleChange}
@@ -239,7 +239,7 @@ export default function Sidebar({listprops,tagprops}) {
                             </div>
                             <div className="flex gap-2 flex-wrap items-center justify-center">
                                 {colorset.map((index) => {
-                                    // console.log(colorset);
+                                
                                     return (
                                         <div
                                             className={`h-4 w-4 rounded ${index} cursor-pointer`}
@@ -319,7 +319,7 @@ export default function Sidebar({listprops,tagprops}) {
                             </div>
                             <div className="flex gap-2 flex-wrap items-center justify-center">
                                 {colorset.map((index) => {
-                                    // console.log(colorset);
+                                 
                                     return (
                                         <div
                                             className={`h-4 w-4 rounded ${index} cursor-pointer`}

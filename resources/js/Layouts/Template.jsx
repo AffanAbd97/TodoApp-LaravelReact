@@ -2,8 +2,7 @@ import Sidebar from '@/Components/Sidebar';
 import { Link, Head } from '@inertiajs/react';
 
 export default function Template({ children,list,tag }) {
-    console.log(list);
-    console.log(tag);
+   
     return (
         <>
             <Head title="Todo-List" />

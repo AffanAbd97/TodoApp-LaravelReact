@@ -6,6 +6,7 @@ use Illuminate\Foundation\Application;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ListController;
+use App\Http\Controllers\TaskController;
 use App\Http\Controllers\ProfileController;
 
 /*
@@ -21,6 +22,7 @@ use App\Http\Controllers\ProfileController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::post('/list', [ListController::class, 'store'])->name('save.list');
+Route::post('/tasks', [TaskController::class, 'store'])->name('save.task');
 Route::post('/tags', [TagController::class, 'store'])->name('save.tag');
 
 Route::get('/dashboard', function () {

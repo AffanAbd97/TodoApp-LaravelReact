@@ -1,11 +1,8 @@
-import Template from "@/Layouts/Template";
 import { router,Head } from "@inertiajs/react";
 import { useRef, useState } from "react";
-import { FaPlus, FaCalendarAlt } from "react-icons/fa";
-import { MdNavigateNext } from "react-icons/md";
-
-export default function Today(props) {
-
+export default function Create ({list,tag})  {
+    console.log(list);
+    console.log(tag);
     const [values, setValues] = useState({
         id:"",
         title: "",
@@ -52,7 +49,7 @@ export default function Today(props) {
         }));
     };
     const submitEdit = (e) => {
-        console.log(values);
+        console.log(values.id);
         e.preventDefault();
 
         // router.put(route("save.task",id),values);
@@ -101,64 +98,8 @@ export default function Today(props) {
         menu.current.classList.toggle("toggled");
         //   btnRef.current.classList.toggle("btn-absolute");
     };
-   
-    return (
-        <>
-            <Template list={props.list} tag={props.tag}>
-                <Head title="Todo-List" />
-                <div className="flex h-full">
-                    <div className="p-6 w-full ">
-                        <div className="text-4xl font-bold flex gap-4 mb-8">
-                            <h1>Today</h1>
-                            <div className="px-2 rounded text-center bg-gray-300">
-                                1
-                            </div>
-                        </div>
-                        <div>
-                            <div className="w-full">
-                                <button className="w-full flex items-center border border-slate-500 p-4 gap-4 rounded " onClick={()=>showNavbar()}>
-                                    <FaPlus />
-                                    Add New Task
-                                </button>
-                            </div>
-                            {props.tasks.map((index)=>{
-                                console.log(index);
-                                return(<>
-                                  <div className="flex justify-between items-center p-4">
-                                <div className="flex gap-6">
-                                    <form action="">
-                                        <input type="checkbox" name="" id="" />
-                                    </form>
-                                    <div>
-                                        <h1 className="font-bold text-xl mb-2">
-                                            {index.title}
-                                        </h1>
-                                        <div className="flex gap-2">
-                                            <div className="flex items-center gap-2 text-sm font-semibold mr-4">
-                                                <FaCalendarAlt />
-                                                {index.date}
-                                            </div>
-
-                                            <div className="flex items-center gap-2 text-sm font-semibold mr-4">
-                                                <div className="h-4 w-4 bg-yellow-200 rounded"></div>
-                                                {index.tag.name}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button onClick={()=>showNavbar(index.title,index.description,index.tag.id,index.list.id,index.date)}>
-                                    <MdNavigateNext />
-                                </button>
-                            </div>
-                            <hr />
-                                </>);
-
-                            })}
-                          
-                            
-                        </div>
-                    </div>
-                    <div ref={menu} className="p-6 w-full h-full rounded bg-slate-50 toggled">
+  return(<>
+  <div ref={menu} className="p-6 w-full h-full rounded bg-slate-50 toggled">
                         <div className="text-4xl font-bold flex justify-between gap-4 mb-8">
                             <h1>Task :</h1>
                             <div
@@ -213,7 +154,7 @@ export default function Today(props) {
                                                 <option value="0">
                                               Select
                                            </option>
-                                                {props.list.map((index,key)=>{
+                                                {list.map((index,key)=>{
 
                                                return( <option value={index.id}>
                                                {index.name}
@@ -253,7 +194,7 @@ export default function Today(props) {
                                         </td>
                                         <td className="px-8">
                                             <div className="flex gap-2">
-                                               {props.tag.map((index,key)=>{
+                                               {tag.map((index,key)=>{
                                                 return( <div className={`flex items-center text-md  font-bold ${index.color} rounded py-0.5 px-2 ${values.tags==index.id ? `border-2 border-black`:`` }`} onClick={()=>tagChange(index.id)}>
                                                 {index.name}
                                             </div>);
@@ -276,9 +217,5 @@ export default function Today(props) {
                               
                             </div>
                         </form>
-                    </div>
-                </div>
-            </Template>
-        </>
-    );
+                    </div></>);
 }
