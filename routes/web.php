@@ -23,6 +23,7 @@ use App\Http\Controllers\ProfileController;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::post('/list', [ListController::class, 'store'])->name('save.list');
 Route::post('/tasks', [TaskController::class, 'store'])->name('save.task');
+Route::put('/task/{id}', [TaskController::class, 'update'])->name('update.task');
 Route::post('/tags', [TagController::class, 'store'])->name('save.tag');
 
 Route::get('/dashboard', function () {

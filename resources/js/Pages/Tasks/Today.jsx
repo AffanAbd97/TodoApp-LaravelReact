@@ -52,18 +52,18 @@ export default function Today(props) {
         }));
     };
     const submitEdit = (e) => {
-        console.log(values);
+        // console.log(values);
         e.preventDefault();
 
-        // router.put(route("save.task",id),values);
-        // setValues((values) => ({
-        //     ...values,
-        //     title: "",
-        //     description: "",
-        //         tags:0,
-        //         list:"",
-        //         date:"",
-        // }));
+        router.put(route("update.task",values.id),values);
+        setValues((values) => ({
+            ...values,
+            title: "",
+            description: "",
+                tags:0,
+                list:"",
+                date:"",
+        }));
     };
     const menu = useRef();
   
@@ -122,7 +122,7 @@ export default function Today(props) {
                                 </button>
                             </div>
                             {props.tasks.map((index)=>{
-                                console.log(index);
+                                // console.log(index);
                                 return(<>
                                   <div className="flex justify-between items-center p-4">
                                 <div className="flex gap-6">
@@ -146,7 +146,7 @@ export default function Today(props) {
                                         </div>
                                     </div>
                                 </div>
-                                <button onClick={()=>showNavbar(index.title,index.description,index.tag.id,index.list.id,index.date)}>
+                                <button onClick={()=>showNavbar(index.id,index.title,index.description,index.tag.id,index.list.id,index.date)}>
                                     <MdNavigateNext />
                                 </button>
                             </div>
@@ -168,7 +168,7 @@ export default function Today(props) {
                                 X
                             </div>
                         </div>
-                        <form className=""onSubmit={!values.id?submit:()=>submitEdit(values.id)}>
+                        <form className=""onSubmit={!values.id?submit:submitEdit}>
                             <div className="mb-4">
                                 <input
                                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"

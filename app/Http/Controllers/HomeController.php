@@ -15,8 +15,8 @@ class HomeController extends Controller
     {
         $list = Lists::all();
         $tag = Tags::all();
-        $tasks = Tasks::where('date',Carbon::now('Asia/Jakarta')->format('Y-m-d'))->get();
-        // $tasks = Tasks::find(2);
+        // $tasks = Tasks::where('date',Carbon::now('Asia/Jakarta')->format('Y-m-d'))->get();
+        $tasks = Tasks::all();
         // dd($tasks);
         foreach ($tasks as $val ) {
  
