@@ -7,10 +7,10 @@ export default function Template({ children,list,tag }) {
         <>
             <Head title="Todo-List" />
             <div className="relative h-screen bg-gray-100  p-8">
-            <div className='flex gap-4 h-full'>
+            <div className='flex gap-4 h-full max-h-screen'>
 
             <Sidebar listprops={list} tagprops={tag}/>
-            <main className='grow'>{children}</main>
+            <main className='grow  h-full max-h-screen'>{children}</main>
             </div>
               
             </div>
