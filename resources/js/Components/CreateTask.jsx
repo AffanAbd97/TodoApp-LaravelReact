@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { router, Head } from "@inertiajs/react";
 export default function CreateTask(props) {
-    console.log(props);
+
     const menu = useRef();
     const [values, setValues] = useState({
         id: "",
@@ -72,7 +72,6 @@ export default function CreateTask(props) {
         }
     };
 
-    console.log(values);
     return (
         <div
             ref={menu}
@@ -168,7 +167,7 @@ export default function CreateTask(props) {
                             <td className="px-8">
                                 <div className="flex gap-2">
                                     {props.tag.map((index, key) => {
-                                        console.log(values.tags);
+                                    
                                         return (
                                             <div
                                                 className={`flex items-center text-md  font-bold ${

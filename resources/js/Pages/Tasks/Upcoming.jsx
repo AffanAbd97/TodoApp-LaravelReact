@@ -7,6 +7,7 @@ import { FaPlus, FaCalendarAlt } from "react-icons/fa";
 import { MdNavigateNext } from "react-icons/md";
 
 export default function Upcoming(props) {
+
     const[isClosed,setClosed]=useState(true);
     const[isEdit,setEdit]=useState(false);
     const [values, setValues] = useState({
@@ -32,7 +33,7 @@ export default function Upcoming(props) {
         }))
       }
     function updateValue(newValue) {
-        console.log(newValue);
+      
         setClosed(newValue);
       }
   
@@ -96,7 +97,7 @@ export default function Upcoming(props) {
 
     return (
         <>
-            <Template list={props.list} tag={props.tag}>
+            <Template list={props.list} tag={props.tag} today={props.countToday }  week={props.countWeek} tomorrow={props.countTomorrow} all={props.count}>
                 <Head title="Todo-List" />
                 <div className="flex h-full max-h-screen pt-8">
                    <div className="grid grid-cols-2 w-full">
@@ -104,7 +105,7 @@ export default function Upcoming(props) {
                         <div className="text-4xl font-bold flex gap-4 mb-8 max-h-[20%] ">
                             <h1 className="">Today</h1>
                             <div className="px-2 rounded text-center bg-gray-300">
-                                1
+                            {props.today.length }
                             </div>
                         </div>
                         <div className="max-h-[80%] h-full ">
@@ -155,9 +156,9 @@ export default function Upcoming(props) {
                     </div>
                     <div className="p-6 w-full ">
                         <div className="text-4xl font-bold flex gap-4 mb-8 max-h-[20%] ">
-                            <h1 className="">Today</h1>
+                            <h1 className="">Tomorrow</h1>
                             <div className="px-2 rounded text-center bg-gray-300">
-                                1
+                                {props.tomorrow.length }
                             </div>
                         </div>
                         <div className="max-h-[80%] h-full ">
@@ -169,6 +170,59 @@ export default function Upcoming(props) {
                             </div>
                             <div  className="h-full  overflow-y-auto ">
                             {props.tomorrow.map((index)=>{
+                                // console.log(index);
+                                return(<>
+                                  <div className="flex justify-between items-center p-4 ">
+                                <div className="flex gap-6">
+                                    <form action="">
+                                        <input type="checkbox" name="" id="" onChange={()=>finished(index.id)} checked={index.status==`finished`?true:false}/>
+                                    </form>
+                                    <div>
+                                        <h1 className={`font-bold text-xl mb-2 ${index.status==`finished`?"line-through":""}`}>
+                                            {index.title}
+                                        </h1>
+                                        <div className="flex gap-2">
+                                            <div className="flex items-center gap-2 text-sm font-semibold mr-4">
+                                                <FaCalendarAlt />
+                                                {index.date}
+                                            </div>
+
+                                            <div className="flex items-center gap-2 text-sm font-semibold mr-4">
+                                                <div className="h-4 w-4 bg-yellow-200 rounded"></div>
+                                                {index.tag.name}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button onClick={()=>openEdit(index.id,index.title,index.description,index.tag.id,index.list.id,index.date)}>
+                                    <MdNavigateNext />
+                                </button>
+                            </div>
+                            <hr />
+                                </>);
+
+                            })}
+                            </div>
+                          
+                            
+                        </div>
+                    </div>
+                    <div className="p-6 w-full ">
+                        <div className="text-4xl font-bold flex gap-4 mb-8 max-h-[20%] ">
+                            <h1 className="">This Week</h1>
+                            <div className="px-2 rounded text-center bg-gray-300">
+                            {props.week.length }
+                            </div>
+                        </div>
+                        <div className="max-h-[80%] h-full ">
+                            <div className="w-full">
+                                <button className="w-full flex items-center border border-slate-500 p-4 gap-4 rounded"  onClick={()=>openCreate()}>
+                                    <FaPlus />
+                                    Add New Task
+                                </button>
+                            </div>
+                            <div  className="h-full  overflow-y-auto ">
+                            {props.week.map((index)=>{
                                 // console.log(index);
                                 return(<>
                                   <div className="flex justify-between items-center p-4 ">

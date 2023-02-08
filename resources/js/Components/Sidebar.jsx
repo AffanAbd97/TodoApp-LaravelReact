@@ -6,8 +6,11 @@ import { FaRegCalendarAlt } from "react-icons/fa";
 import { BiLogOut } from "react-icons/bi";
 import { BsListCheck, BsStickyFill, BsPlusLg } from "react-icons/bs";
 import "../../css/Sidebar.css";
-export default function Sidebar({listprops,tagprops}) {
-  
+export default function Sidebar({listprops,tagprops,today,tomorrow,week,all}) {
+  console.log(today);
+  console.log(tomorrow);
+  console.log(week);
+  console.log(all);
     const [color, setColor] = useState("bg-[#38bdf8]");
     const [list, setList] = useState({
         nameList: "",
@@ -143,23 +146,32 @@ export default function Sidebar({listprops,tagprops}) {
                 <div className="mb-6">
                     <h2 className="font-bold">TASKS</h2>
                     <ul>
+                    <li className="w-full p-2  rounded hover:bg-slate-400 flex justify-between">
+                            <Link href={route('home')} className="flex items-center text-md">
+                                <BsListCheck />
+                                <span className="ml-4 font-semibold hover:font-bold">
+                                    All Task
+                                </span>
+                            </Link>
+                            <div className="px-2 rounded bg-slate-100">{all}</div>
+                        </li>
                         <li className="w-full p-2  rounded hover:bg-slate-400 flex justify-between">
-                            <Link href="" className="flex items-center text-md">
+                            <Link   href={route('upcoming')} className="flex items-center text-md">
                                 <MdOutlineDoubleArrow />
                                 <span className="ml-4 font-semibold hover:font-bold">
                                     Upcoming
                                 </span>
                             </Link>
-                            <div className="px-2 rounded bg-slate-100">1</div>
+                            <div className="px-2 rounded bg-slate-100">{today+tomorrow+week}</div>
                         </li>
                         <li className="w-full p-2  rounded hover:bg-slate-400 flex justify-between">
-                            <Link href="" className="flex items-center text-md">
+                            <Link  href={route('today')} className="flex items-center text-md">
                                 <BsListCheck />
                                 <span className="ml-4 font-semibold hover:font-bold">
                                     Today
                                 </span>
                             </Link>
-                            <div className="px-2 rounded bg-slate-100">1</div>
+                            <div className="px-2 rounded bg-slate-100">{today}</div>
                         </li>
                         <li className="w-full p-2  rounded hover:bg-slate-400 flex justify-between">
                             <Link href="" className="flex items-center text-md">
@@ -181,7 +193,7 @@ export default function Sidebar({listprops,tagprops}) {
                             return (
                                 <li className="w-full p-2  rounded hover:bg-slate-400 flex justify-between">
                                     <Link
-                                        href=""
+                                        href={route('list',index.id)}
                                         className="flex items-center text-md"
                                     >
                                         <div

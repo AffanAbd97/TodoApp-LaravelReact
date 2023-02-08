@@ -20,7 +20,10 @@ use App\Http\Controllers\ProfileController;
 |
 */
 
-Route::get('/', [HomeController::class, 'upcoming'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/upcoming', [HomeController::class, 'upcoming'])->name('upcoming');
+Route::get('/today', [HomeController::class, 'today'])->name('today');
+Route::get('/list/{id}', [HomeController::class, 'list'])->name('list');
 Route::post('/list', [ListController::class, 'store'])->name('save.list');
 Route::post('/tasks', [TaskController::class, 'store'])->name('save.task');
 Route::put('/task/{id}', [TaskController::class, 'update'])->name('update.task');

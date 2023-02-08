@@ -6,7 +6,7 @@ import { useRef, useState } from "react";
 import { FaPlus, FaCalendarAlt } from "react-icons/fa";
 import { MdNavigateNext } from "react-icons/md";
 
-export default function Today(props) {
+export default function List(props) {
     const[isClosed,setClosed]=useState(true);
     const[isEdit,setEdit]=useState(false);
     const [values, setValues] = useState({
