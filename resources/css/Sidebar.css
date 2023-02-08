@@ -4,7 +4,20 @@
     overflow: hidden;
 }
 .btn-absolute{
-    position: absolute;
-    top:60px;
-    left: 56px;
+    position: fixed;
+    top:30px;
+    left: 1.5rem;
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    background-color: white;
+    padding: 10px;
+    border-radius: 1.5rem;
+}
+@media (min-width:768px){
+    .btn-absolute{
+    
+        left: 40px;
+        
+    }
+
 }

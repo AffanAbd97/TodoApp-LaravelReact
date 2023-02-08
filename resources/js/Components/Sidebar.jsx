@@ -98,13 +98,13 @@ export default function Sidebar({listprops,tagprops}) {
             <div
                 ref={navRef}
                 id="sidebar"
-                className="bg-slate-300 p-6 rounded h-full flex flex-col w-[250px] ease-in transf "
+                className="bg-slate-300 p-6 rounded h-full flex flex-col w-[250px] ease-in toggled md:relative  absolute "
             >
                 <div className="flex items-center  justify-between mb-4 ">
                     <h1 className="font-bold text-xl">Menu</h1>
                     <button
                         ref={btnRef}
-                        className="font-bold text-xl cursor-pointer"
+                        className="font-bold text-xl cursor-pointer btn-absolute "
                         onClick={showNavbar}
                     >
                         <GiHamburgerMenu />
@@ -174,7 +174,7 @@ export default function Sidebar({listprops,tagprops}) {
                 </div>
                 <hr className="mb-6" />
                 <h2 className="font-bold">List</h2>
-                <div className="mb-6 overflow-y-auto min-h-[150px] ">
+                <div className="mb-6 overflow-y-auto min-h-[7rem] md:min-h-[10rem] ">
                     <ul className=" ">
                         {listprops.map((index, key) => {
                             //    current.classList.add(index.color)
@@ -297,7 +297,7 @@ export default function Sidebar({listprops,tagprops}) {
                             <div>Add New Tag</div>
                             <div
                                 className="px-2 rounded text-right  hover:font-semibold cursor-pointer"
-                                onClick={() => listComp()}
+                                onClick={() => tagComp()}
                             >
                                 X
                             </div>

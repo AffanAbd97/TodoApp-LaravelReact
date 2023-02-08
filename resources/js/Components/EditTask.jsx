@@ -68,7 +68,7 @@ export default function EditTask(props) {
     return (
         <div
             ref={menu}
-            className="p-6 w-full h-full rounded bg-slate-50 toggled"
+            className="px-6 pb-0 w-full h-full rounded bg-slate-50 toggled md:relative absolute"
         >
             <div className="text-4xl font-bold flex justify-between gap-4 mb-8">
                 <h1>Task Edit :</h1>

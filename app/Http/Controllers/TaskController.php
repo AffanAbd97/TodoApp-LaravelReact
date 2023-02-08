@@ -36,4 +36,22 @@ class TaskController extends Controller
         return Redirect::back();
        
     }
+
+    public function complete($id)
+    {
+   
+        $Task = Tasks::find($id);
+       
+        if ($Task->status=='finished') {
+            # code...
+            $Task->status='running';
+        }else{
+            $Task->status='finished';
+
+        }
+       
+        $Task->Save();
+        return Redirect::back();
+       
+    }
 }
