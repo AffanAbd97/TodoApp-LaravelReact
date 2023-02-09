@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Tasks;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 class TaskController extends Controller
@@ -16,7 +17,7 @@ class TaskController extends Controller
         $Task->description=$request->description;
         $Task->date=$request->date;
         $Task->status='running';
-        $Task->tag_id=$request->tags;
+        $Task->user_id=Auth::user()->id;
         $Task->list_id=$request->list;
         $Task->Save();
         return Redirect::back();
@@ -30,7 +31,7 @@ class TaskController extends Controller
         $Task->description=$request->description;
         $Task->date=$request->date;
       
-        $Task->tag_id=$request->tags;
+        $Task->user_id=Auth::user()->id;
         $Task->list_id=$request->list;
         $Task->Save();
         return Redirect::back();
@@ -51,6 +52,15 @@ class TaskController extends Controller
         }
        
         $Task->Save();
+        return Redirect::back();
+       
+    }
+    public function delete($id)
+    {
+      
+        $List =Tasks::find($id);;
+      
+        $List->delete();
         return Redirect::back();
        
     }

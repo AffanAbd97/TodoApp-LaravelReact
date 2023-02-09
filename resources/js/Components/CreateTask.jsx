@@ -158,44 +158,12 @@ export default function CreateTask(props) {
                                 />
                             </td>
                         </tr>
-                        <tr>
-                            <td className="py-4">
-                                <label htmlFor="" className="font-bold:">
-                                    Tags
-                                </label>
-                            </td>
-                            <td className="px-8">
-                                <div className="flex gap-2">
-                                    {props.tag.map((index, key) => {
-                                    
-                                        return (
-                                            <div
-                                                className={`flex items-center text-md  font-bold ${
-                                                    index.color
-                                                } rounded py-0.5 px-2 ${
-                                                    values.tags == index.id
-                                                        ? `border-2 border-black`
-                                                        : ``
-                                                }`}
-                                                onClick={() =>
-                                                    tagChange(index.id)
-                                                }
-                                            >
-                                                {index.name}
-                                            </div>
-                                        );
-                                    })}
-                                </div>
-                                <input type="hidden" name="" id="inputTag" />
-                            </td>
-                        </tr>
+                     
                     </table>
                 </div>
 
                 <div className="flex w-full justify-between items-center gap-2">
-                    <button className="w-1/2 bg-slate-500 p-4 rounded">
-                        Delete Task
-                    </button>
+                
                     <button
                         type="submit"
                         className="w-1/2 bg-slate-500 p-4 rounded"

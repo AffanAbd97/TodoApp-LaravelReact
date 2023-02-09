@@ -14,7 +14,7 @@ class HomeController extends Controller
     public function index()
     {
         $list = Lists::all();
-        $tag = Tags::all();
+       
         // $tasks = Tasks::where('date',Carbon::now('Asia/Jakarta')->format('Y-m-d'))->get();
         $tasks = Tasks::where('status','running')->get();
         $finish = Tasks::where('status','finished')->get();
@@ -42,7 +42,7 @@ class HomeController extends Controller
             'list'=>$list,
             'tasks'=>$tasks,
             'finish'=>$finish,
-            'tag'=>$tag,
+       
             'countToday'=>$countToday,
             'countTomorrow'=>$countTomorrow,
             'countWeek'=>$countWeek,
@@ -52,7 +52,7 @@ class HomeController extends Controller
     public function today()
     {
         $list = Lists::all();
-        $tag = Tags::all();
+       
         $tasks = Tasks::where('date',Carbon::now('Asia/Jakarta')->format('Y-m-d'))->get();
         // $tasks = Tasks::all();
         // dd($tasks);
@@ -72,7 +72,7 @@ class HomeController extends Controller
         return Inertia::render('Tasks/Today',[
             'list'=>$list,
             'tasks'=>$tasks,
-            'tag'=>$tag,
+       
             'countToday'=>$countToday,
             'countTomorrow'=>$countTomorrow,
             'countWeek'=>$countWeek,
@@ -82,7 +82,7 @@ class HomeController extends Controller
     public function upcoming()
     {
         $list = Lists::all();
-        $tag = Tags::all();
+       
         $today = Tasks::where('date',Carbon::now('Asia/Jakarta')->format('Y-m-d'))->get();
         $tomorrow = Tasks::where('date',Carbon::tomorrow('Asia/Jakarta')->format('Y-m-d'))->get();
         // $week = Tasks::where('date',Carbon::now('Asia/Jakarta')->format('Y-m-d'))->get();
@@ -99,19 +99,19 @@ class HomeController extends Controller
         // dd( $data );
         foreach ($week as $val ) {
  
-            $week->tag_id = $val->tag;        
+               
             $week->list_id = $val->list;   
         }
      
         foreach ($tomorrow as $val ) {
  
-            $tomorrow->tag_id = $val->tag;        
+                
             $tomorrow->list_id = $val->list;   
         }
      
         foreach ($today as $val ) {
  
-            $today->tag_id = $val->tag;        
+              
             $today->list_id = $val->list;   
         }
      
@@ -124,13 +124,13 @@ class HomeController extends Controller
             'countTomorrow'=>$countTomorrow,
             'countWeek'=>$countWeek,
             'count'=>$count,
-            'tag'=>$tag
+            
     ]);
     }
-    public function list($id){
+    public function list($slug){
         {
             $list = Lists::all();
-            $tag = Tags::all();
+            $id = lists::where('slug',$slug)->first()->id;
             $tasks = Tasks::where('list_id',$id)->get();
             // $tasks = Tasks::all();
             // dd($tasks);
@@ -142,15 +142,15 @@ class HomeController extends Controller
                 ->get()->count();
             $count = Tasks::where('status','running')->get()->count();
             foreach ($tasks as $val ) {
-     
-                $tasks->tag_id = $val->tag;        
+            
                 $tasks->list_id = $val->list;   
             }
          
             return Inertia::render('Tasks/List',[
                 'list'=>$list,
                 'tasks'=>$tasks,
-                'tag'=>$tag,
+                'id'=>$id,
+           
                 'countToday'=>$countToday,
                 'countTomorrow'=>$countTomorrow,
                 'countWeek'=>$countWeek,

@@ -20,21 +20,24 @@ use App\Http\Controllers\ProfileController;
 |
 */
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/upcoming', [HomeController::class, 'upcoming'])->name('upcoming');
-Route::get('/today', [HomeController::class, 'today'])->name('today');
-Route::get('/list/{id}', [HomeController::class, 'list'])->name('list');
-Route::post('/list', [ListController::class, 'store'])->name('save.list');
-Route::post('/tasks', [TaskController::class, 'store'])->name('save.task');
-Route::put('/task/{id}', [TaskController::class, 'update'])->name('update.task');
-Route::put('/task/{id}', [TaskController::class, 'complete'])->name('finish.task');
-Route::post('/tags', [TagController::class, 'store'])->name('save.tag');
+
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/upcoming', [HomeController::class, 'upcoming'])->name('upcoming');
+Route::get('/today', [HomeController::class, 'today'])->name('today');
+Route::get('/list/{slug}', [HomeController::class, 'list'])->name('list');
+Route::post('/list', [ListController::class, 'store'])->name('save.list');
+Route::delete('/list/{id}', [ListController::class, 'delete'])->name('delete.list');
+Route::post('/tasks', [TaskController::class, 'store'])->name('save.task');
+Route::put('/task/{id}', [TaskController::class, 'update'])->name('update.task');
+Route::put('/task/{id}', [TaskController::class, 'complete'])->name('finish.task');
+Route::delete('/task/{id}', [TaskController::class, 'delete'])->name('delete.task');
+Route::post('/tags', [TagController::class, 'store'])->name('save.tag');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

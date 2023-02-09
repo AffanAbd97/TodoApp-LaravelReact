@@ -19,14 +19,14 @@ return new class extends Migration
             $table->string('description');
             $table->date('date');
             $table->string('status');
-            $table->unsignedBigInteger('tag_id');
- 
-            $table->foreign('tag_id')->references('id')->on('tags');
+        
             $table->unsignedBigInteger('list_id');
  
             $table->foreign('list_id')->references('id')->on('lists');
        
-       
+            $table->unsignedBigInteger('user_id');
+ 
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

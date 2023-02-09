@@ -13,7 +13,7 @@ export default function List(props) {
         id:"",
         title: "",
         description: "",
-            tags:0,
+         
             list:"",
             date:"",
         
@@ -26,7 +26,7 @@ export default function List(props) {
             id:"",
             title: "",
             description: "",
-                tags:0,
+                
                 list:"",
                 date:"",
         }))
@@ -51,7 +51,7 @@ export default function List(props) {
 
     }
    }
-   const openEdit =(valId,valTitle,valDescription,valTags,valList,valDate)=>{
+   const openEdit =(valId,valTitle,valDescription,valList,valDate)=>{
     setEdit(true);
     if (valId === undefined) {
         valId = "";
@@ -62,9 +62,7 @@ export default function List(props) {
     if (valDescription === undefined) {
         valDescription = "";
     }
-    if (valTags === undefined) {
-        valTags = 0;
-    }
+   
     if (valList === undefined) {
         valList = "";
     }
@@ -76,7 +74,7 @@ export default function List(props) {
     id:valId,
     title:valTitle,
     description:valDescription,
-    tags:valTags,
+  
     list:valList,
     date:valDate}
    );
@@ -92,11 +90,14 @@ export default function List(props) {
    const finished =(id)=>{
     router.put(route("finish.task",id));
    }
+   const deleteList =()=>{
+    router.delete(route("delete.list",props.id));
+   }
   
 
     return (
         <>
-            <Template list={props.list} tag={props.tag} today={props.countToday }  week={props.countWeek} tomorrow={props.countTomorrow} all={props.count}>
+            <Template list={props.list} today={props.countToday }  week={props.countWeek} tomorrow={props.countTomorrow} all={props.count}>
                 <Head title="Todo-List" />
                 <div className="flex h-full max-h-screen pt-8">
                     <div className="p-6 w-full ">
@@ -107,46 +108,56 @@ export default function List(props) {
                             </div>
                         </div>
                         <div className="max-h-[80%] h-full ">
-                            <div className="w-full">
+                         {props.tasks.length>0?   <div className="w-full">
                                 <button className="w-full flex items-center border border-slate-500 p-4 gap-4 rounded"  onClick={()=>openCreate()}>
                                     <FaPlus />
                                     Add New Task
                                 </button>
-                            </div>
+                            </div>:''}
                             <div  className="h-full  overflow-y-auto ">
-                            {props.tasks.map((index)=>{
-                                // console.log(index);
-                                return(<>
-                                  <div className="flex justify-between items-center p-4 ">
-                                <div className="flex gap-6">
-                                    <form action="">
-                                        <input type="checkbox" name="" id="" onChange={()=>finished(index.id)} checked={index.status==`finished`?true:false}/>
-                                    </form>
-                                    <div>
-                                        <h1 className={`font-bold text-xl mb-2 ${index.status==`finished`?"line-through":""}`}>
-                                            {index.title}
-                                        </h1>
-                                        <div className="flex gap-2">
-                                            <div className="flex items-center gap-2 text-sm font-semibold mr-4">
-                                                <FaCalendarAlt />
-                                                {index.date}
-                                            </div>
-
-                                            <div className="flex items-center gap-2 text-sm font-semibold mr-4">
-                                                <div className="h-4 w-4 bg-yellow-200 rounded"></div>
-                                                {index.tag.name}
+                                {props.tasks.length>0?
+                                (props.tasks.map((index)=>{
+                                    // console.log(index);
+                                    return(<>
+                                      <div className="flex justify-between items-center p-4 ">
+                                    <div className="flex gap-6">
+                                        <form action="">
+                                            <input type="checkbox" name="" id="" onChange={()=>finished(index.id)} checked={index.status==`finished`?true:false}/>
+                                        </form>
+                                        <div>
+                                            <h1 className={`font-bold text-xl mb-2 ${index.status==`finished`?"line-through":""}`}>
+                                                {index.title}
+                                            </h1>
+                                            <div className="flex gap-2">
+                                                <div className="flex items-center gap-2 text-sm font-semibold mr-4">
+                                                    <FaCalendarAlt />
+                                                    {index.date}
+                                                </div>
+    
+                                                <div className="flex items-center gap-2 text-sm font-semibold mr-4">
+                                                    <div className="h-4 w-4 bg-yellow-200 rounded"></div>
+                                                    {index.list.name}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <button onClick={()=>openEdit(index.id,index.title,index.description,index.list.id,index.date)}>
+                                        <MdNavigateNext />
+                                    </button>
                                 </div>
-                                <button onClick={()=>openEdit(index.id,index.title,index.description,index.tag.id,index.list.id,index.date)}>
-                                    <MdNavigateNext />
+                                <hr />
+                                    </>);
+    
+                                })):(
+                                    <div className="w-full">
+                                <button className="w-full flex items-center border border-slate-500 p-4 gap-4 rounded bg-slate-800 text-white "  onClick={()=>deleteList()}>
+                                    
+                                    Delete List
                                 </button>
                             </div>
-                            <hr />
-                                </>);
-
-                            })}
+                                )
+                            }
+                          
                             </div>
                           
                             

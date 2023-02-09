@@ -193,7 +193,7 @@ export default function Sidebar({listprops,tagprops,today,tomorrow,week,all}) {
                             return (
                                 <li className="w-full p-2  rounded hover:bg-slate-400 flex justify-between">
                                     <Link
-                                        href={route('list',index.id)}
+                                        href={route('list',index.slug)}
                                         className="flex items-center text-md"
                                     >
                                         <div
@@ -275,90 +275,11 @@ export default function Sidebar({listprops,tagprops,today,tomorrow,week,all}) {
                     </div>
                 </div>
                 <hr className="mb-6" />
-                <div className="mb-6 h-auto">
-                    <h2 className="font-bold">Tags</h2>
-
-                    <div className="flex  flex-wrap gap-2">
-                    {tagprops.map((index, key) => {
-                            //    current.classList.add(index.color)
-                            return (
-                                <Link
-                            href=""
-                            className="flex items-center text-md  font-bold bg-red-400 rounded py-0.5 px-2 "
-                        >
-                            {index.name}
-                        </Link>
-                            );
-                        })}
-                        
-
-                        <button
-                             onClick={() => tagComp()}
-                            className="flex items-center text-md  font-bold bg-slate-400 rounded py-0.5 px-2 "
-                        >
-                            <BsPlusLg />
-                            <span className="ml-2 font-semibold hover:font-bold">
-                                Add Tag
-                            </span>
-                        </button>
-                         <div
-                        ref={compTag}
-                        className="absolute bg-white p-2 rounded hidden -mt-36"
-                    >
-                        <div className="flex items-center justify-between mb-4">
-                            <div>Add New Tag</div>
-                            <div
-                                className="px-2 rounded text-right  hover:font-semibold cursor-pointer"
-                                onClick={() => tagComp()}
-                            >
-                                X
-                            </div>
-                        </div>
-
-                        <form action="" onSubmit={submiTag} >
-                            <div className="flex gap-4 mb-4">
-                                <div
-                                    ref={colorTag}
-                                    className="h-4 w-4 rounded"
-                                ></div>
-                                <input
-                                    id="nameTag"
-                                    className="mx-auto h-4 text-xs rounded border-1 border-slate-300 focus:border-slate-300"
-                                    type="text"
-                                    value={tag.nameTag}
-                                    onChange={handleTagChange}
-                                />
-                            </div>
-                            <div className="flex gap-2 flex-wrap items-center justify-center">
-                                {colorset.map((index) => {
-                                 
-                                    return (
-                                        <div
-                                            className={`h-4 w-4 rounded ${index} cursor-pointer`}
-                                            onClick={() =>
-                                                changeColor(index, color)
-                                            }
-                                        ></div>
-                                    );
-                                })}
-
-                                
-                            </div>
-
-                            <button
-                                type="submit"
-                                className="w-full bg-blue-800 mt-5 bottom-0 rounded text-white"
-                            >
-                                Submit
-                            </button>
-                        </form>
-                    </div>
-                    </div>
-                </div>
+            
                 <div className="flex flex-row h-full">
                     <ul className=" self-end  w-full">
                         <li className="w-full p-2  rounded hover:bg-slate-400 flex justify-between">
-                            <Link href="" className="flex items-center text-md">
+                            <Link href={route('logout')}method="post" className="flex items-center text-md">
                                 <BiLogOut />
                                 <span className="ml-4 font-semibold hover:font-bold">
                                     Logout

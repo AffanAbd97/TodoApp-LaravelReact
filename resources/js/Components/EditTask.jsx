@@ -50,19 +50,10 @@ export default function EditTask(props) {
             list: event.target.value,
         }));
     };
-    const tagChange = (param) => {
-        if (values.tags != param) {
-            setValues((values) => ({
-                ...values,
-                tags: param,
-            }));
-        } else if (values.tags == param) {
-            setValues((values) => ({
-                ...values,
-                tags: null,
-            }));
-        }
-    };
+   const deleteTask=(id)=>{
+console.log(id);
+    router.delete(route("delete.task",id));
+   }
   
     console.log(values);
     return (
@@ -151,42 +142,12 @@ export default function EditTask(props) {
                                 />
                             </td>
                         </tr>
-                        <tr>
-                            <td className="py-4">
-                                <label htmlFor="" className="font-bold:">
-                                    Tags
-                                </label>
-                            </td>
-                            <td className="px-8">
-                                <div className="flex gap-2">
-                                    {props.tag.map((index, key) => {
-                                        console.log(values.tags);
-                                        return (
-                                            <div
-                                                className={`flex items-center text-md  font-bold ${
-                                                    index.color
-                                                } rounded py-0.5 px-2 ${
-                                                    values.tags == index.id
-                                                        ? `border-2 border-black`
-                                                        : ``
-                                                }`}
-                                                onClick={() =>
-                                                    tagChange(index.id)
-                                                }
-                                            >
-                                                {index.name}
-                                            </div>
-                                        );
-                                    })}
-                                </div>
-                                <input type="hidden" name="" id="inputTag" />
-                            </td>
-                        </tr>
+                     
                     </table>
                 </div>
 
                 <div className="flex w-full justify-between items-center gap-2">
-                    <button className="w-1/2 bg-slate-500 p-4 rounded">
+                    <button className="w-1/2 bg-slate-500 p-4 rounded" onClick={()=>deleteTask(values.id)}>
                         Delete Task
                     </button>
                     <button

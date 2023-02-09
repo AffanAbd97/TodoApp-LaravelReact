@@ -13,7 +13,7 @@ export default function Index(props) {
         id: "",
         title: "",
         description: "",
-        tags: 0,
+  
         list: "",
         date: "",
     });
@@ -27,7 +27,7 @@ export default function Index(props) {
             id: "",
             title: "",
             description: "",
-            tags: 0,
+          
             list: "",
             date: "",
         }));
@@ -60,7 +60,7 @@ export default function Index(props) {
         valId,
         valTitle,
         valDescription,
-        valTags,
+       
         valList,
         valDate
     ) => {
@@ -74,9 +74,7 @@ export default function Index(props) {
         if (valDescription === undefined) {
             valDescription = "";
         }
-        if (valTags === undefined) {
-            valTags = 0;
-        }
+    
         if (valList === undefined) {
             valList = "";
         }
@@ -87,7 +85,6 @@ export default function Index(props) {
             id: valId,
             title: valTitle,
             description: valDescription,
-            tags: valTags,
             list: valList,
             date: valDate,
         });
@@ -106,7 +103,7 @@ export default function Index(props) {
         <>
             <Template
                 list={props.list}
-                tag={props.tag}
+    
                 today={props.countToday}
                 week={props.countWeek}
                 tomorrow={props.countTomorrow}
@@ -116,9 +113,9 @@ export default function Index(props) {
                 <div className="flex h-full max-h-screen pt-8">
                     <div className="p-6 w-full ">
                         <div className="text-4xl font-bold flex gap-4 mb-8 max-h-[20%] ">
-                            <h1 className="">Today</h1>
+                            <h1 className="">All Task</h1>
                             <div className="px-2 rounded text-center bg-gray-300">
-                                1
+                            {props.count}
                             </div>
                         </div>
                         <div className="max-h-[80%] h-full ">
@@ -158,7 +155,7 @@ export default function Index(props) {
                                                             index.id,
                                                             index.title,
                                                             index.description,
-                                                            index.tag.id,
+                                                         
                                                             index.list.id,
                                                             index.date
                                                         ):''
@@ -212,7 +209,7 @@ export default function Index(props) {
                                                             index.id,
                                                             index.title,
                                                             index.description,
-                                                            index.tag.id,
+                                                  
                                                             index.list.id,
                                                             index.date
                                                         )
@@ -232,7 +229,7 @@ export default function Index(props) {
                         <EditTask
                             values={values}
                             list={props.list}
-                            tag={props.tag}
+                  
                             closed={isClosed}
                             onChange={updateValue}
                             onSubmit={resetValue}
@@ -241,7 +238,7 @@ export default function Index(props) {
                         <CreateTask
                             values={values}
                             list={props.list}
-                            tag={props.tag}
+                      
                             closed={isClosed}
                             onChange={updateValue}
                             onSubmit={resetValue}

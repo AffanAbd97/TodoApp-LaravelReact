@@ -13,7 +13,7 @@ export default function Today(props) {
         id:"",
         title: "",
         description: "",
-            tags:0,
+      
             list:"",
             date:"",
         
@@ -26,7 +26,7 @@ export default function Today(props) {
             id:"",
             title: "",
             description: "",
-                tags:0,
+            
                 list:"",
                 date:"",
         }))
@@ -51,7 +51,7 @@ export default function Today(props) {
 
     }
    }
-   const openEdit =(valId,valTitle,valDescription,valTags,valList,valDate)=>{
+   const openEdit =(valId,valTitle,valDescription,valList,valDate)=>{
     setEdit(true);
     if (valId === undefined) {
         valId = "";
@@ -62,9 +62,7 @@ export default function Today(props) {
     if (valDescription === undefined) {
         valDescription = "";
     }
-    if (valTags === undefined) {
-        valTags = 0;
-    }
+  
     if (valList === undefined) {
         valList = "";
     }
@@ -76,7 +74,7 @@ export default function Today(props) {
     id:valId,
     title:valTitle,
     description:valDescription,
-    tags:valTags,
+
     list:valList,
     date:valDate}
    );
@@ -96,7 +94,7 @@ export default function Today(props) {
 
     return (
         <>
-            <Template list={props.list} tag={props.tag} today={props.countToday }  week={props.countWeek} tomorrow={props.countTomorrow} all={props.count}>
+            <Template list={props.list}  today={props.countToday }  week={props.countWeek} tomorrow={props.countTomorrow} all={props.count}>
                 <Head title="Todo-List" />
                 <div className="flex h-full max-h-screen pt-8">
                     <div className="p-6 w-full ">
@@ -134,12 +132,12 @@ export default function Today(props) {
 
                                             <div className="flex items-center gap-2 text-sm font-semibold mr-4">
                                                 <div className="h-4 w-4 bg-yellow-200 rounded"></div>
-                                                {index.tag.name}
+                                                {index.list.name}
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <button onClick={()=>openEdit(index.id,index.title,index.description,index.tag.id,index.list.id,index.date)}>
+                                <button onClick={()=>openEdit(index.id,index.title,index.description,index.list.id,index.date)}>
                                     <MdNavigateNext />
                                 </button>
                             </div>
@@ -155,9 +153,9 @@ export default function Today(props) {
                     {
                         isEdit?
                             
-                            <EditTask values={values} list={props.list} tag={props.tag} closed={isClosed} onChange={updateValue}  onSubmit={resetValue}/>
+                            <EditTask values={values} list={props.list} closed={isClosed} onChange={updateValue}  onSubmit={resetValue}/>
                         :
-                            <CreateTask values={values} list={props.list} tag={props.tag} closed={isClosed} onChange={updateValue} onSubmit={resetValue}/>
+                            <CreateTask values={values} list={props.list}  closed={isClosed} onChange={updateValue} onSubmit={resetValue}/>
 
                         
                     }
