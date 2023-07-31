@@ -18,13 +18,16 @@ export default function EditTask(props) {
     useEffect(() => {
         if (isClosed) {
             menu.current.classList.add("toggled");
+            menu.current.classList.remove("basis-1/3");
         } else {
             menu.current.classList.remove("toggled");
+            menu.current.classList.add("basis-1/3");
         }
     }, [isClosed]);
   
 
     function handleChange(e) {
+        
         const key = e.target.id;
         const value = e.target.value;
         setValues((values) => ({
@@ -32,11 +35,12 @@ export default function EditTask(props) {
             [key]: value,
         }));
     }
-   
+    
     const handleClose = () => {
         props.onChange(true);
-      };
+    };
     const submit = (e) => {
+        console.log(e);
         e.preventDefault();
         props.onChange(true);
         router.put(route("update.task",values.id),values);
@@ -51,7 +55,7 @@ export default function EditTask(props) {
         }));
     };
    const deleteTask=(id)=>{
-console.log(id);
+
     router.delete(route("delete.task",id));
    }
   
@@ -59,12 +63,12 @@ console.log(id);
     return (
         <div
             ref={menu}
-            className="px-6 pb-0 w-full h-full rounded bg-slate-50 toggled md:relative absolute"
+            className="p-6 w-full h-full rounded bg-white toggled md:relative absolute shadow-lg ease-linear duration-200 ml-4 "
         >
-            <div className="text-4xl font-bold flex justify-between gap-4 mb-8">
-                <h1>Task Edit :</h1>
+            <div className="text-4xl text-[#2C3333] font-bold flex justify-between gap-4 mb-8">
+                <h1>Edit Task</h1>
                 <div
-                    className="px-2 rounded text-center bg-gray-300"
+                    className="px-2 rounded text-center cursor-pointer border border-white hover:border-[#2C3333] hover:bg-gray-100"
                     onClick={handleClose}
                 >
                     X
@@ -73,7 +77,7 @@ console.log(id);
             <form className="" onSubmit={submit}>
                 <div className="mb-4">
                     <input
-                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        className="appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight border border-gray-200 focus:ring-[#1B98E0] focus:border-[#1B98E0]"
                         id="title"
                         type="text"
                         placeholder="title"
@@ -86,7 +90,7 @@ console.log(id);
                     <textarea
                         id="description"
                         rows={4}
-                        className=" resize-noneblock p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                        className="block p-2.5 w-full text-sm text-gray-900 resize-none  rounded-lg border border-gray-200 focus:ring-[#1B98E0] focus:border-[#1B98E0]"
                         placeholder="Write your thoughts here..."
                         defaultValue={values.description}
                         value={values.description}
@@ -94,11 +98,11 @@ console.log(id);
                     />
                 </div>
                 <div className="mb-4 flex items-center">
-                    <table>
+                    <table className="w-full">
                         <tr>
                             <td className="py-4">
                                 {" "}
-                                <label htmlFor="" className="font-bold:">
+                                <label htmlFor="" className="font-bold">
                                     List
                                 </label>
                             </td>
@@ -107,7 +111,7 @@ console.log(id);
                                 <select
                                     name=""
                                     id=""
-                                    className="rounded"
+                                    className="rounded w-full border border-gray-200 focus:ring-[#1B98E0] focus:border-[#1B98E0]"
                                     onChange={selectChange}
                                     value={values.list}
                                 >
@@ -126,7 +130,7 @@ console.log(id);
                         <tr>
                             <td className="py-4">
                                 {" "}
-                                <label htmlFor="" className="font-bold:">
+                                <label htmlFor="" className="font-bold">
                                     Due Date
                                 </label>
                             </td>
@@ -135,7 +139,7 @@ console.log(id);
                                     type="date"
                                     name=""
                                     id="date"
-                                    className="rounded"
+                                    className="rounded border border-gray-200 focus:ring-[#1B98E0] focus:border-[#1B98E0]"
                                     defaultValue={values.date}
                                     value={values.date}
                                     onChange={handleChange}
@@ -147,12 +151,12 @@ console.log(id);
                 </div>
 
                 <div className="flex w-full justify-between items-center gap-2">
-                    <button className="w-1/2 bg-slate-500 p-4 rounded" onClick={()=>deleteTask(values.id)}>
+                    <button className="w-1/2 bg-[#FF1654] hover:bg-[#D7263D] shadow-md hover:shadow-none -translate-y-1 hover:translate-y-0 active:translate-y-1 active:bg-[#DB162F] font-bold text-white p-4 rounded" onClick={()=>deleteTask(values.id)}>
                         Delete Task
                     </button>
                     <button
                         type="submit"
-                        className="w-1/2 bg-slate-500 p-4 rounded"
+                        className="w-1/2 bg-[#1B98E0]  hover:bg-[#1768AC] shadow-md hover:shadow-none -translate-y-1 hover:translate-y-0 active:translate-y-1 active:bg-[#007EA7]  font-bold text-white p-4 rounded"
                     >
                         Save Change
                     </button>

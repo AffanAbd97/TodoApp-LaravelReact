@@ -34,7 +34,7 @@ Route::get('/list/{slug}', [HomeController::class, 'list'])->name('list');
 Route::post('/list', [ListController::class, 'store'])->name('save.list');
 Route::delete('/list/{id}', [ListController::class, 'delete'])->name('delete.list');
 Route::post('/tasks', [TaskController::class, 'store'])->name('save.task');
-Route::put('/task/{id}', [TaskController::class, 'update'])->name('update.task');
+Route::put('/task/{id}/update', [TaskController::class, 'update'])->name("update.task");
 Route::put('/task/{id}', [TaskController::class, 'complete'])->name('finish.task');
 Route::delete('/task/{id}', [TaskController::class, 'delete'])->name('delete.task');
 Route::post('/tags', [TagController::class, 'store'])->name('save.tag');

@@ -4,6 +4,15 @@
     padding-right: 0;
     overflow: hidden;
 }
+
+.toggled-right{
+    width: 0;
+    padding-left: 0;
+    padding-right: 0;
+    overflow: hidden;
+    flex-basis: 25%;
+}
+
 .btn-absolute{
     position: fixed;
     top:30px;

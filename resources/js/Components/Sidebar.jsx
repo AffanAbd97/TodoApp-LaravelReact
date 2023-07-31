@@ -9,10 +9,7 @@ import "../../css/Sidebar.css";
 
 import {textColor,listHover} from '../values/Color'
 export default function Sidebar({listprops,tagprops,today,tomorrow,week,all}) {
-  console.log(today);
-  console.log(tomorrow);
-  console.log(week);
-  console.log(all);
+
     const [color, setColor] = useState("bg-[#38bdf8]");
     const [list, setList] = useState({
         nameList: "",
