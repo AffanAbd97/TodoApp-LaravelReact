@@ -25,9 +25,7 @@ class HomeController extends Controller
         $countWeek  = Tasks::whereBetween('date', [$startOfWeek, $endOfWeek])
             ->get()->count();
         $count = Tasks::where('status','running')->get()->count();
-        // dd($tasks);
         foreach ($tasks as $val ) {
- 
             $tasks->tag_id = $val->tag;        
             $tasks->list_id = $val->list;   
         }
@@ -41,8 +39,7 @@ class HomeController extends Controller
         return Inertia::render('Tasks/Index',[
             'list'=>$list,
             'tasks'=>$tasks,
-            'finish'=>$finish,
-       
+            'finish'=>$finish,     
             'countToday'=>$countToday,
             'countTomorrow'=>$countTomorrow,
             'countWeek'=>$countWeek,
@@ -52,10 +49,6 @@ class HomeController extends Controller
     public function today()
     {
         $list = Lists::all();
-       
-        $tasks = Tasks::where('date',Carbon::now('Asia/Jakarta')->format('Y-m-d'))->get();
-        // $tasks = Tasks::all();
-        // dd($tasks);
         $startOfWeek = Carbon::now('Asia/Jakarta')->startOfWeek()->toDateString();
         $endOfWeek = Carbon::now('Asia/Jakarta')->endOfWeek()->toDateString();
         $countToday = Tasks::where('date',Carbon::now('Asia/Jakarta')->format('Y-m-d'))->get()->count();
@@ -132,8 +125,6 @@ class HomeController extends Controller
             $list = Lists::all();
             $id = lists::where('slug',$slug)->first()->id;
             $tasks = Tasks::where('list_id',$id)->get();
-            // $tasks = Tasks::all();
-            // dd($tasks);
             $startOfWeek = Carbon::now('Asia/Jakarta')->startOfWeek()->toDateString();
             $endOfWeek = Carbon::now('Asia/Jakarta')->endOfWeek()->toDateString();
             $countToday = Tasks::where('date',Carbon::now('Asia/Jakarta')->format('Y-m-d'))->get()->count();

@@ -5,6 +5,7 @@ import { router, Head } from "@inertiajs/react";
 import { useRef, useState } from "react";
 import { FaPlus, FaCalendarAlt } from "react-icons/fa";
 import { MdNavigateNext } from "react-icons/md";
+import React,{useEffect} from "react";
 
 export default function Index(props) {
     const [isClosed, setClosed] = useState(true);
@@ -19,8 +20,14 @@ export default function Index(props) {
     });
     const currentBtn = useRef();
     const finishBtn = useRef();
-    const [data,setData] =useState(props.tasks)
-    console.log(data==props.tasks);
+    const [data, setData] = useState([]);
+
+    // Set the "data" value to "props.tasks" using useEffect
+    useEffect(() => {
+      setData(props.tasks);
+    }, [props.tasks]);
+    console.log(data);
+    console.log(props.tasks);
     function resetValue() {
         setValues((values) => ({
             ...values,
@@ -97,6 +104,7 @@ export default function Index(props) {
 
     const finished = (id) => {
         router.put(route("finish.task", id));
+        
     };
 
     return (
@@ -110,7 +118,7 @@ export default function Index(props) {
                 all={props.count}
             >
                 <Head title="Todo-List" />
-                <div className="flex h-full max-h-screen pt-8">
+                <div className="flex h-full max-h-screen pt-8 bg-white rounded-lg">
                     <div className="p-6 w-full ">
                         <div className="text-4xl font-bold flex gap-4 mb-8 max-h-[20%] ">
                             <h1 className="">All Task</h1>
@@ -121,7 +129,7 @@ export default function Index(props) {
                         <div className="max-h-[80%] h-full ">
                             <div className="w-full">
                                 <button
-                                    className="w-full flex items-center border border-slate-500 p-4 gap-4 rounded"
+                                    className="w-full flex items-center border border-slate-500 active:bg-[#0A81D1] hover:bg-[#D1F5FF]  active:text-white p-4 gap-4 rounded"
                                     onClick={() => openCreate()}
                                 >
                                     <FaPlus />

@@ -10,7 +10,7 @@ export default function Template({ children,list,tag,today,tomorrow,week,all }) 
             <div className='flex gap-4 h-full max-h-screen'>
 
             <Sidebar listprops={list} tagprops={tag} today={today }  week={week} tomorrow={tomorrow} all={all}/>
-            <main className='grow  h-full max-h-screen'>{children}</main>
+            <main className='grow  h-full max-h-screen p-8'>{children}</main>
             </div>
               
             </div>
