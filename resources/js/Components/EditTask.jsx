@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { router, Head } from "@inertiajs/react";
+import { router, usePage } from "@inertiajs/react";
 export default function EditTask(props) {
-    console.log(props);
+
+    const { errors } = usePage().props
     const menu = useRef();
     const [values, setValues] = useState(
         props.values
@@ -14,7 +15,12 @@ export default function EditTask(props) {
     useEffect(() => {
         setValues(props.values);
     }, [props.values]);
-
+    useEffect(() => {
+        console.log(Object.keys(errors).length);
+        if(Object.keys(errors).length > 0){
+          setClosed(false);
+        }
+    }, [errors]);
     useEffect(() => {
         if (isClosed) {
             menu.current.classList.add("toggled");
@@ -77,25 +83,28 @@ export default function EditTask(props) {
             <form className="" onSubmit={submit}>
                 <div className="mb-4">
                     <input
-                        className="appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight border border-gray-200 focus:ring-[#1B98E0] focus:border-[#1B98E0]"
+                        className={`appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight border  ${errors.title ? "border-red-500":' border-gray-200'} focus:ring-[#1B98E0] focus:border-[#1B98E0]`}
                         id="title"
                         type="text"
-                        placeholder="title"
+                        placeholder="Write your Activity Name here..."
                         defaultValue={values.title}
                         value={values.title}
                         onChange={handleChange}
                     />
+                     {errors.title && <div className="text-red-500 text-xs italic">{errors.title}</div>}
+                  
                 </div>
                 <div className="mb-4">
                     <textarea
                         id="description"
                         rows={4}
-                        className="block p-2.5 w-full text-sm text-gray-900 resize-none  rounded-lg border border-gray-200 focus:ring-[#1B98E0] focus:border-[#1B98E0]"
-                        placeholder="Write your thoughts here..."
+                        className={`block p-2.5 w-full text-sm text-gray-900 resize-none  rounded-lg border   ${errors.description ? "border-red-500":' border-gray-200'} focus:ring-[#1B98E0] focus:border-[#1B98E0]`}
+                        placeholder="Write your Activities here..."
                         defaultValue={values.description}
                         value={values.description}
                         onChange={handleChange}
                     />
+                     {errors.description && <div className="text-red-500 text-xs italic">{errors.description}</div>}
                 </div>
                 <div className="mb-4 flex items-center">
                     <table className="w-full">
@@ -103,7 +112,7 @@ export default function EditTask(props) {
                             <td className="py-4">
                                 {" "}
                                 <label htmlFor="" className="font-bold">
-                                    List
+                                    Category
                                 </label>
                             </td>
                             <td className="px-8">
@@ -111,7 +120,7 @@ export default function EditTask(props) {
                                 <select
                                     name=""
                                     id=""
-                                    className="rounded w-full border border-gray-200 focus:ring-[#1B98E0] focus:border-[#1B98E0]"
+                                    className={`rounded w-full border  ${errors.list ? "border-red-500":' border-gray-200'}focus:ring-[#1B98E0] focus:border-[#1B98E0]`}
                                     onChange={selectChange}
                                     value={values.list}
                                 >
@@ -125,6 +134,7 @@ export default function EditTask(props) {
                                     })}
                                     ;
                                 </select>
+                                {errors.list && <div className="text-red-500 text-xs italic">{errors.list}</div>}
                             </td>
                         </tr>
                         <tr>
@@ -139,11 +149,12 @@ export default function EditTask(props) {
                                     type="date"
                                     name=""
                                     id="date"
-                                    className="rounded border border-gray-200 focus:ring-[#1B98E0] focus:border-[#1B98E0]"
+                                    className={`rounded w-full border  ${errors.date ? "border-red-500":' border-gray-200'}focus:ring-[#1B98E0] focus:border-[#1B98E0]`}
                                     defaultValue={values.date}
                                     value={values.date}
                                     onChange={handleChange}
                                 />
+                                 {errors.date && <div className="text-red-500 text-xs italic">{errors.date}</div>}
                             </td>
                         </tr>
                      
