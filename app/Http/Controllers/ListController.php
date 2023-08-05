@@ -24,7 +24,7 @@ class ListController extends Controller
         $List->slug=$hyphenated;
         $List->color=$request->color;
         $List->Save();
-        return Redirect::back();
+        return Redirect::back()->with('success',"List Added!");
        
     }
     public function delete($id)
@@ -33,7 +33,7 @@ class ListController extends Controller
         $List =Lists::find($id);;
       
         $List->delete();
-        return Redirect::route('home');
+        return Redirect::route('home')->with('error',"List Deleted!");
        
     }
 }

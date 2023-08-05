@@ -113,6 +113,7 @@ export default function Index(props) {
                 week={props.countWeek}
                 tomorrow={props.countTomorrow}
                 all={props.count}
+                flash={props.flash}
             >
                 <Head title="Todo-List" />
                 {flash.message && (

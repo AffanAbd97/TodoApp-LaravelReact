@@ -25,7 +25,7 @@ class TaskController extends Controller
         $Task->user_id=Auth::user()->id;
         $Task->list_id=$request->list;
         $Task->Save();
-        return Redirect::back()->with('message',"hi")->with('success',"success")->with('warning',"warning")->with('info',"info");
+        return Redirect::back()->with('success',"Task Added!");
        
     }
     public function update(Request $request,$id)
@@ -46,7 +46,7 @@ class TaskController extends Controller
         $Task->user_id=Auth::user()->id;
         $Task->list_id=$request->list;
         $Task->Save();
-        return Redirect::back();
+        return Redirect::back()->with('info',"Task Updated!");
        
     }
 
@@ -58,13 +58,15 @@ class TaskController extends Controller
         if ($Task->status=='finished') {
             # code...
             $Task->status='running';
+            $Task->Save();
+            return Redirect::back()->with('info',"Task Marked As Running!");
         }else{
             $Task->status='finished';
 
+            $Task->Save();
+            return Redirect::back()->with('success',"Task Completed");
         }
        
-        $Task->Save();
-        return Redirect::back();
        
     }
     public function delete($id)
@@ -73,7 +75,7 @@ class TaskController extends Controller
         $List =Tasks::find($id);;
 
         $List->delete();
-        return Redirect::back();
+        return Redirect::back()->with('error',"Task Deleted!");
        
     }
 }
