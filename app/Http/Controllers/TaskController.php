@@ -25,7 +25,7 @@ class TaskController extends Controller
         $Task->user_id=Auth::user()->id;
         $Task->list_id=$request->list;
         $Task->Save();
-        return Redirect::back();
+        return Redirect::back()->with('message',"hi")->with('success',"success")->with('warning',"warning")->with('info',"info");
        
     }
     public function update(Request $request,$id)
@@ -71,7 +71,7 @@ class TaskController extends Controller
     {
       
         $List =Tasks::find($id);;
-      
+
         $List->delete();
         return Redirect::back();
        

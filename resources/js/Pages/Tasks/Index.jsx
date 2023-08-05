@@ -1,7 +1,7 @@
 import CreateTask from "@/Components/CreateTask";
 import EditTask from "@/Components/EditTask";
 import Template from "@/Layouts/Template";
-import { router, Head } from "@inertiajs/react";
+import { router, Head,usePage } from "@inertiajs/react";
 import { useRef, useState } from "react";
 import { FaPlus, FaCalendarAlt } from "react-icons/fa";
 import { MdNavigateNext } from "react-icons/md";
@@ -18,6 +18,8 @@ export default function Index(props) {
         list: "",
         date: "",
     });
+    console.log(props);
+    const { flash } = usePage().props
     const currentBtn = useRef();
     const finishBtn = useRef();
     const [data, setData] = useState([]);
@@ -113,6 +115,9 @@ export default function Index(props) {
                 all={props.count}
             >
                 <Head title="Todo-List" />
+                {flash.message && (
+          <div class="alert">{flash.message}</div>
+        )}
                 <div className="flex h-full max-h-screen rounded-lg">
                     <div className="p-6 w-full  bg-white ">
                         <div className="text-4xl font-bold flex gap-4 mb-8 max-h-[20%] ">

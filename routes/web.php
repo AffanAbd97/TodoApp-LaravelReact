@@ -36,7 +36,7 @@ Route::delete('/list/{id}', [ListController::class, 'delete'])->name('delete.lis
 Route::post('/tasks', [TaskController::class, 'store'])->name('save.task');
 Route::put('/task/{id}/update', [TaskController::class, 'update'])->name("update.task");
 Route::put('/task/{id}', [TaskController::class, 'complete'])->name('finish.task');
-Route::delete('/task/{id}', [TaskController::class, 'delete'])->name('delete.task');
+Route::delete('/task/{id}/delete', [TaskController::class, 'delete'])->name('delete.task');
 Route::post('/tags', [TagController::class, 'store'])->name('save.tag');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

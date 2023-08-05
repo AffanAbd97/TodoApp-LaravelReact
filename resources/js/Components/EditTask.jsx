@@ -51,8 +51,8 @@ export default function EditTask(props) {
         props.onChange(true);
         router.put(route("update.task",values.id),values);
         props.onSubmit();
-
-       
+        
+        
     };
     const selectChange = (event) => {
         setValues((values) => ({
@@ -60,12 +60,15 @@ export default function EditTask(props) {
             list: event.target.value,
         }));
     };
-   const deleteTask=(id)=>{
-
-    router.delete(route("delete.task",id));
+    const deleteTask=(e)=>{
+        e.preventDefault();
+       console.log(e);
+   
+    props.onChange(true);
+    router.delete(route("delete.task",values.id));
    }
   
-    console.log(values);
+   
     return (
         <div
             ref={menu}
@@ -162,7 +165,7 @@ export default function EditTask(props) {
                 </div>
 
                 <div className="flex w-full justify-between items-center gap-2">
-                    <button className="w-1/2 bg-[#FF1654] hover:bg-[#D7263D] shadow-md hover:shadow-none -translate-y-1 hover:translate-y-0 active:translate-y-1 active:bg-[#DB162F] font-bold text-white p-4 rounded" onClick={()=>deleteTask(values.id)}>
+                    <button className="w-1/2 bg-[#FF1654] hover:bg-[#D7263D] shadow-md hover:shadow-none -translate-y-1 hover:translate-y-0 active:translate-y-1 active:bg-[#DB162F] font-bold text-white p-4 rounded" onClick={deleteTask}>
                         Delete Task
                     </button>
                     <button
