@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { router, usePage } from "@inertiajs/react";
+import ConfirmDialog from "./ConfirmDialog";
 export default function EditTask(props) {
 
     const { errors } = usePage().props
@@ -8,6 +9,7 @@ export default function EditTask(props) {
         props.values
     );
     const [isClosed, setClosed] = useState(props.closed);
+    const [isDelete, setDelete] = useState(false);
     
     useEffect(() => {
         setClosed(props.closed);
@@ -60,16 +62,24 @@ export default function EditTask(props) {
             list: event.target.value,
         }));
     };
-    const deleteTask=(e)=>{
-        e.preventDefault();
-       console.log(e);
-   
-    props.onChange(true);
-    router.delete(route("delete.task",values.id));
-   }
+ 
   
-   
+   const openDelete = (
+) => {
+    
+    if (isDelete) {
+        setDelete(false);
+    } else {
+        setDelete(true);
+    }
+};
+
+const handleChangeDelete = (newValue) => {
+    setDelete(newValue);
+  };
     return (
+        <>
+        {isDelete ? <ConfirmDialog isDelete = {isDelete} onDeleteChange = {handleChangeDelete} id={values.id} onChange={props.onChange} />:<></>}
         <div
             ref={menu}
             className="p-6 w-full h-full rounded bg-white toggled md:relative absolute shadow-lg ease-linear duration-200 ml-4 "
@@ -165,7 +175,9 @@ export default function EditTask(props) {
                 </div>
 
                 <div className="flex w-full justify-between items-center gap-2">
-                    <button className="w-1/2 bg-[#FF1654] hover:bg-[#D7263D] shadow-md hover:shadow-none -translate-y-1 hover:translate-y-0 active:translate-y-1 active:bg-[#DB162F] font-bold text-white p-4 rounded" onClick={deleteTask}>
+                    <button 
+                    type="button"
+                    className="w-1/2 bg-[#FF1654] hover:bg-[#D7263D] shadow-md hover:shadow-none -translate-y-1 hover:translate-y-0 active:translate-y-1 active:bg-[#DB162F] font-bold text-white p-4 rounded" onClick={openDelete}>
                         Delete Task
                     </button>
                     <button
@@ -176,6 +188,6 @@ export default function EditTask(props) {
                     </button>
                 </div>
             </form>
-        </div>
+        </div></>
     );
 }
