@@ -107,7 +107,7 @@ export default function CreateTask(props) {
                         id="title"
                         type="text"
                         placeholder="Write your Activity Name here..."
-                        defaultValue={values.title}
+                        
                         value={values.title}
                         onChange={handleChange}
                     />
@@ -120,7 +120,7 @@ export default function CreateTask(props) {
                         rows={4}
                         className={`block p-2.5 w-full text-sm text-gray-900 resize-none  rounded-lg border   ${errors.description ? "border-red-500":' border-gray-200'} focus:ring-[#1B98E0] focus:border-[#1B98E0]`}
                         placeholder="Write your Activities here..."
-                        defaultValue={values.description}
+                       
                         value={values.description}
                         onChange={handleChange}
                     />
@@ -128,7 +128,8 @@ export default function CreateTask(props) {
                 </div>
                 <div className="mb-4 flex items-center">
                     <table className="w-full">
-                        <tr>
+                       <tbody>
+                       <tr>
                             <td className="py-4">
                                 {" "}
                                 <label htmlFor="" className="font-bold">
@@ -170,13 +171,13 @@ export default function CreateTask(props) {
                                     name=""
                                     id="date"
                                     className={`rounded w-full border  ${errors.date ? "border-red-500":' border-gray-200'}focus:ring-[#1B98E0] focus:border-[#1B98E0]`}
-                                    defaultValue={values.date}
                                     value={values.date}
                                     onChange={handleChange}
                                 />
                                  {errors.date && <div className="text-red-500 text-xs italic">{errors.date}</div>}
                             </td>
                         </tr>
+                       </tbody>
                      
                     </table>
                 </div>

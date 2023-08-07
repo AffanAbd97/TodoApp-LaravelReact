@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Lists;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 class ListController extends Controller
@@ -20,7 +21,7 @@ class ListController extends Controller
         $List = new Lists;
         $List->name=$request->nameList;
       
-        
+        $List->user_id=Auth::user()->id;
         $List->slug=$hyphenated;
         $List->color=$request->color;
         $List->Save();

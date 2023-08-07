@@ -10,7 +10,7 @@ import "../../css/Sidebar.css";
 import {textColor,listHover} from '../values/Color'
 export default function Sidebar({listprops,tagprops,today,tomorrow,week,all}) {
 
-    const [color, setColor] = useState("bg-[#38bdf8]");
+    const [color, setColor] = useState(null);
     const [list, setList] = useState({
         nameList: "",
         color: color,
@@ -110,8 +110,10 @@ export default function Sidebar({listprops,tagprops,today,tomorrow,week,all}) {
        
     };
     const changeColor = (value, old) => {
+      if (value!=old) {
         colorTag.current.classList.remove(old);
         setColor(value);
+      }
     };
     useEffect(() => {
         colorTag.current.classList.add(color);
@@ -244,7 +246,7 @@ export default function Sidebar({listprops,tagprops,today,tomorrow,week,all}) {
                             <div className="flex gap-4 mb-4">
                                 <div
                                     ref={colorTag}
-                                    className={`h-4 w-4 ${color} rounded`}
+                                    className={`h-4 w-4 ${color==null ? "bg-[#38bdf8]":color} rounded`}
                                 ></div>
                                 <input
                                     id="nameList"
@@ -258,7 +260,7 @@ export default function Sidebar({listprops,tagprops,today,tomorrow,week,all}) {
                                 {colorset.map((index) => {
                                 
                                     return (
-                                        <div
+                                        <div key={index}
                                             className={`h-4 w-4 rounded ${index} cursor-pointer`}
                                             onClick={() =>
                                                 changeColor(index, color)

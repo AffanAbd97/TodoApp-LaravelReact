@@ -8,23 +8,25 @@ use Inertia\Inertia;
 use App\Models\Lists;
 use App\Models\Tasks;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        $list = Lists::all();
-       
-        // $tasks = Tasks::where('date',Carbon::now('Asia/Jakarta')->format('Y-m-d'))->get();
-        $tasks = Tasks::where('status','running')->get();
-        $finish = Tasks::where('status','finished')->get();
+        $userId = Auth::user()->id;
+    
+        $list = Lists::where('user_id',$userId)->get();
+        
+        $tasks = Tasks::where('status','running')->where('user_id',$userId)->get();
+        $finish = Tasks::where('status','finished')->where('user_id',$userId)->get();
         $startOfWeek = Carbon::now('Asia/Jakarta')->startOfWeek()->toDateString();
         $endOfWeek = Carbon::now('Asia/Jakarta')->endOfWeek()->toDateString();
         $countToday = Tasks::where('date',Carbon::now('Asia/Jakarta')->format('Y-m-d'))->get()->count();
         $countTomorrow = Tasks::where('date',Carbon::tomorrow('Asia/Jakarta')->format('Y-m-d'))->get()->count();
-        $countWeek  = Tasks::whereBetween('date', [$startOfWeek, $endOfWeek])
-            ->get()->count();
-        $count = Tasks::where('status','running')->get()->count();
+        $countWeek  = Tasks::whereBetween('date', [$startOfWeek, $endOfWeek])->where('user_id',$userId)->get()
+            ->count();
+        $count = Tasks::where('status','running')->where('user_id',$userId)->get()->count();
         foreach ($tasks as $val ) {
             $tasks->tag_id = $val->tag;        
             $tasks->list_id = $val->list;   
@@ -48,14 +50,16 @@ class HomeController extends Controller
     }
     public function today()
     {
-        $list = Lists::all();
+        $userId = Auth::user()->id;
+    
+        $list = Lists::where('user_id',$userId)->get();
         $startOfWeek = Carbon::now('Asia/Jakarta')->startOfWeek()->toDateString();
         $endOfWeek = Carbon::now('Asia/Jakarta')->endOfWeek()->toDateString();
         $countToday = Tasks::where('date',Carbon::now('Asia/Jakarta')->format('Y-m-d'))->get()->count();
         $countTomorrow = Tasks::where('date',Carbon::tomorrow('Asia/Jakarta')->format('Y-m-d'))->get()->count();
-        $countWeek  = Tasks::whereBetween('date', [$startOfWeek, $endOfWeek])
-            ->get()->count();
-        $count = Tasks::where('status','running')->get()->count();
+        $countWeek  = Tasks::whereBetween('date', [$startOfWeek, $endOfWeek])->where('user_id',$userId)->get()
+            ->count();
+        $count = Tasks::where('status','running')->where('user_id',$userId)->get()->count();
         foreach ($tasks as $val ) {
  
             $tasks->tag_id = $val->tag;        
@@ -74,21 +78,22 @@ class HomeController extends Controller
     }
     public function upcoming()
     {
-        $list = Lists::all();
+        $userId = Auth::user()->id;
+    
+        $list = Lists::where('user_id',$userId)->get();
        
         $today = Tasks::where('date',Carbon::now('Asia/Jakarta')->format('Y-m-d'))->get();
         $tomorrow = Tasks::where('date',Carbon::tomorrow('Asia/Jakarta')->format('Y-m-d'))->get();
-        // $week = Tasks::where('date',Carbon::now('Asia/Jakarta')->format('Y-m-d'))->get();
         $startOfWeek = Carbon::now('Asia/Jakarta')->startOfWeek()->toDateString();
         $endOfWeek = Carbon::now('Asia/Jakarta')->endOfWeek()->toDateString();
         
-        $week  = Tasks::whereBetween('date', [$startOfWeek, $endOfWeek])
+        $week  = Tasks::whereBetween('date', [$startOfWeek, $endOfWeek])->where('user_id',$userId)->get()
         ->get();
         $countToday = Tasks::where('date',Carbon::now('Asia/Jakarta')->format('Y-m-d'))->get()->count();
         $countTomorrow = Tasks::where('date',Carbon::tomorrow('Asia/Jakarta')->format('Y-m-d'))->get()->count();
-        $countWeek  = Tasks::whereBetween('date', [$startOfWeek, $endOfWeek])
-            ->get()->count();
-        $count = Tasks::where('status','running')->get()->count();
+        $countWeek  = Tasks::whereBetween('date', [$startOfWeek, $endOfWeek])->where('user_id',$userId)->get()
+            ->count();
+        $count = Tasks::where('status','running')->where('user_id',$userId)->get()->count();
         // dd( $data );
         foreach ($week as $val ) {
  
@@ -122,27 +127,32 @@ class HomeController extends Controller
     }
     public function list($slug){
         {
-            $list = Lists::all();
+            $userId = Auth::user()->id;
+        
+            $list = Lists::where('user_id',$userId)->get();
             $id = lists::where('slug',$slug)->first()->id;
+            $category = lists::where('slug',$slug)->first();
             $tasks = Tasks::where('list_id',$id)->get();
             $startOfWeek = Carbon::now('Asia/Jakarta')->startOfWeek()->toDateString();
             $endOfWeek = Carbon::now('Asia/Jakarta')->endOfWeek()->toDateString();
             $countToday = Tasks::where('date',Carbon::now('Asia/Jakarta')->format('Y-m-d'))->get()->count();
             $countTomorrow = Tasks::where('date',Carbon::tomorrow('Asia/Jakarta')->format('Y-m-d'))->get()->count();
-            $countWeek  = Tasks::whereBetween('date', [$startOfWeek, $endOfWeek])
+            $countWeek  = Tasks::whereBetween('date', [$startOfWeek, $endOfWeek])->where('user_id',$userId)->get()
                 ->get()->count();
-            $count = Tasks::where('status','running')->get()->count();
+            $count = Tasks::where('status','running')->where('user_id',$userId)->get()->count();
             foreach ($tasks as $val ) {
             
                 $tasks->list_id = $val->list;   
             }
-         
+         $categoryCount = $tasks->count();
             return Inertia::render('Tasks/List',[
                 'list'=>$list,
                 'tasks'=>$tasks,
                 'id'=>$id,
+                'category'=>$category,
            
                 'countToday'=>$countToday,
+                'categoryCount'=>$categoryCount,
                 'countTomorrow'=>$countTomorrow,
                 'countWeek'=>$countWeek,
                 'count'=>$count,

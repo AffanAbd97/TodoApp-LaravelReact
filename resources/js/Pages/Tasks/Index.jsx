@@ -6,7 +6,7 @@ import { useRef, useState } from "react";
 import { FaPlus, FaCalendarAlt } from "react-icons/fa";
 import { MdNavigateNext } from "react-icons/md";
 import React, { useEffect } from "react";
-
+import {BsInfoSquareFill } from "react-icons/bs";
 export default function Index(props) {
     const [isClosed, setClosed] = useState(true);
     const [isEdit, setEdit] = useState(false);
@@ -18,11 +18,12 @@ export default function Index(props) {
         list: "",
         date: "",
     });
-    console.log(props);
-    const { flash } = usePage().props
+  
+
     const currentBtn = useRef();
     const finishBtn = useRef();
     const [data, setData] = useState([]);
+    const [status, setStatus] = useState(1);
 
     // Set the "data" value to "props.tasks" using useEffect
     useEffect(() => {
@@ -58,8 +59,10 @@ export default function Index(props) {
     function switchData(val) {
         if (val == 1) {
             setData(props.tasks);
+            setStatus(1);
         } else if (val == 2) {
             setData(props.finish);
+            setStatus(2);
         }
     }
     const openEdit = (
@@ -116,9 +119,7 @@ export default function Index(props) {
                 flash={props.flash}
             >
                 <Head title="Todo-List" />
-                {flash.message && (
-          <div class="alert">{flash.message}</div>
-        )}
+       
                 <div className="flex h-full max-h-screen rounded-lg">
                     <div className="p-6 w-full  bg-white ">
                         <div className="text-4xl font-bold flex gap-4 mb-8 max-h-[20%] ">
@@ -163,7 +164,7 @@ export default function Index(props) {
                             </nav>
 
                             <div className="h-full  overflow-y-auto ">
-                                {data.map((index) => {
+                                {data.length>0?(data.map((index) => {
                                     // console.log(index);
                                     return (
                                         <>
@@ -262,7 +263,14 @@ export default function Index(props) {
                                             <hr />
                                         </>
                                     );
-                                })}
+                                })):(  <div className="w-full h-full flex flex-col">
+                                 
+                                    <div className="flex grow justify-center items-center p-4">
+                                        <div className="text-center text-7xl text-[#2C3333]/75 font-bold">
+                                        <BsInfoSquareFill className="mx-auto mb-8"/>
+                                {status ==1?' No Task on this Category!':" No Task on this completed!"}
+                                        </div>
+                                </div></div>)}
                             </div>
                         </div>
                     </div>
