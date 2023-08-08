@@ -8,8 +8,8 @@ import { BsListCheck, BsStickyFill, BsPlusLg } from "react-icons/bs";
 import "../../css/Sidebar.css";
 
 import {textColor,listHover} from '../values/Color'
-export default function Sidebar({listprops,tagprops,today,tomorrow,week,all}) {
-
+export default function Sidebar({listprops,tagprops,today,tomorrow,week,all,task}) {
+    console.log(task.filter(task=>task.list_id ==3).length);
     const [color, setColor] = useState(null);
     const [list, setList] = useState({
         nameList: "",
@@ -19,7 +19,7 @@ export default function Sidebar({listprops,tagprops,today,tomorrow,week,all}) {
         nameTag: "",
         color: color,
     });
-
+    
     const colorset = [
         "bg-[#38bdf8]",
         "bg-[#fda4af]",
@@ -191,26 +191,28 @@ export default function Sidebar({listprops,tagprops,today,tomorrow,week,all}) {
                     </ul>
                 </div>
                 <hr className="mb-6" />
-                <h2 className="font-bold">List</h2>
+                <h2 className="font-bold">Category</h2>
                 <div className="mb-6 overflow-y-auto min-h-[7rem] md:min-h-[10rem] ">
                     <ul className=" ">
-                        {listprops.map((index, key) => {
-                            //    current.classList.add(index.color)
+                        {listprops.map((category, key) => {
+                            const movieCount = task.filter(task => task.list_id === category.id).length;
+
+                            //    current.classList.add(category.color)
                             return (
-                                <li className={`w-full p-2  rounded hover:bg-[${listHover}] flex justify-between`}>
+                                <li key = {key} className={`w-full p-2  rounded hover:bg-[${listHover}] flex justify-between`}>
                                     <Link
-                                        href={route('list',index.slug)}
+                                        href={route('list',category.slug)}
                                         className="flex items-center text-md"
                                     >
                                         <div
-                                            className={`h-4 w-4 rounded ${index.color}`}
+                                            className={`h-4 w-4 rounded ${category.color}`}
                                         ></div>
                                         <span className="ml-4 font-semibold hover:font-bold">
-                                            {index.name}
+                                            {category.name}
                                         </span>
                                     </Link>
                                     <div className="px-2 rounded bg-slate-100">
-                                        1
+                                        {movieCount}
                                     </div>
                                 </li>
                             );
@@ -224,7 +226,7 @@ export default function Sidebar({listprops,tagprops,today,tomorrow,week,all}) {
                         >
                             <BsPlusLg />
                             <span className="ml-4 font-semibold hover:font-bold">
-                                Add New List
+                                Add New Category
                             </span>
                         </button>
                     </div>

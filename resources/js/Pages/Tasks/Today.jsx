@@ -5,7 +5,7 @@ import { router,Head } from "@inertiajs/react";
 import { useRef, useState } from "react";
 import { FaPlus, FaCalendarAlt } from "react-icons/fa";
 import { MdNavigateNext } from "react-icons/md";
-
+import {BsInfoSquareFill } from "react-icons/bs";
 export default function Today(props) {
     const[isClosed,setClosed]=useState(true);
     const[isEdit,setEdit]=useState(false);
@@ -94,25 +94,20 @@ export default function Today(props) {
 
     return (
         <>
-            <Template list={props.list}  today={props.countToday }  week={props.countWeek} tomorrow={props.countTomorrow} all={props.count}>
+            <Template list={props.list}  today={props.countToday }  week={props.countWeek} tomorrow={props.countTomorrow} all={props.count} flash={props.flash} task={props.tasks}>
                 <Head title="Todo-List" />
-                <div className="flex h-full max-h-screen pt-8">
-                    <div className="p-6 w-full ">
+                <div className="flex h-full max-h-screen ">
+                    <div className="p-6 w-full  bg-white">
                         <div className="text-4xl font-bold flex gap-4 mb-8 max-h-[20%] ">
-                            <h1 className="">Today</h1>
+                            <h1 className="">Today Tasks</h1>
                             <div className="px-2 rounded text-center bg-gray-300">
-                                1
+                                {props.today.length}
                             </div>
                         </div>
                         <div className="max-h-[80%] h-full ">
-                            <div className="w-full">
-                                <button className="w-full flex items-center border border-slate-500 p-4 gap-4 rounded"  onClick={()=>openCreate()}>
-                                    <FaPlus />
-                                    Add New Task
-                                </button>
-                            </div>
+                          
                             <div  className="h-full  overflow-y-auto ">
-                            {props.tasks.map((index)=>{
+                            {props.today.length > 0 ?(props.today.map((index)=>{
                                 // console.log(index);
                                 return(<>
                                   <div className="flex justify-between items-center p-4 ">
@@ -144,7 +139,14 @@ export default function Today(props) {
                             <hr />
                                 </>);
 
-                            })}
+                            })):( <div className="w-full h-full flex flex-col">
+                                 
+                            <div className="flex grow justify-center items-center p-4">
+                                <div className="text-center text-7xl text-[#2C3333]/75 font-bold">
+                                <BsInfoSquareFill className="mx-auto mb-8"/>
+                       No Task Today!
+                                </div>
+                        </div></div>)}
                             </div>
                           
                             

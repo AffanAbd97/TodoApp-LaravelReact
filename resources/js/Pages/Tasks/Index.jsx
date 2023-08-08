@@ -7,6 +7,7 @@ import { FaPlus, FaCalendarAlt } from "react-icons/fa";
 import { MdNavigateNext } from "react-icons/md";
 import React, { useEffect } from "react";
 import {BsInfoSquareFill } from "react-icons/bs";
+import { toast, ToastContainer } from 'react-toastify';
 export default function Index(props) {
     const [isClosed, setClosed] = useState(true);
     const [isEdit, setEdit] = useState(false);
@@ -107,6 +108,11 @@ export default function Index(props) {
     const finished = (id) => {
         router.put(route("finish.task", id));
     };
+    const notify = () => {
+        toast.info("Please Create Category First!", {
+            position: toast.POSITION.TOP_CENTER
+          })
+    }
 
     return (
         <>
@@ -117,9 +123,10 @@ export default function Index(props) {
                 tomorrow={props.countTomorrow}
                 all={props.count}
                 flash={props.flash}
+                task={props.tasks}
             >
                 <Head title="Todo-List" />
-       
+                <ToastContainer/>
                 <div className="flex h-full max-h-screen rounded-lg">
                     <div className="p-6 w-full  bg-white ">
                         <div className="text-4xl font-bold flex gap-4 mb-8 max-h-[20%] ">
@@ -132,7 +139,11 @@ export default function Index(props) {
                             <div className="w-full">
                                 <button
                                     className="w-full flex items-center border border-slate-500 active:bg-[#0A81D1] hover:bg-[#D1F5FF]  active:text-white p-4 gap-4 rounded"
-                                    onClick={() => openCreate()}
+                                    onClick={
+                                        
+props.list.length>0?() => openCreate():                                    
+notify                            
+ }
                                 >
                                     <FaPlus />
                                     Add New Task

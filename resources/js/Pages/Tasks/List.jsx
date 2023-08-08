@@ -96,6 +96,7 @@ export default function List(props) {
                 tomorrow={props.countTomorrow}
                 all={props.count}
                 flash={props.flash}
+                task={props.tasks}
             >
                 <Head title="Todo-List" />
                 <div className="flex h-full max-h-screen rounded-lg">
