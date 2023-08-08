@@ -1,4 +1,4 @@
-import { router, Link } from "@inertiajs/react";
+import { router, Link,usePage } from "@inertiajs/react";
 import React, { useEffect, useRef, useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { MdOutlineDoubleArrow } from "react-icons/md";
@@ -6,20 +6,12 @@ import { FaRegCalendarAlt } from "react-icons/fa";
 import { BiLogOut } from "react-icons/bi";
 import { BsListCheck, BsStickyFill, BsPlusLg } from "react-icons/bs";
 import "../../css/Sidebar.css";
-
+import { toast, ToastContainer } from 'react-toastify';
 import {textColor,listHover} from '../values/Color'
 export default function Sidebar({listprops,tagprops,today,tomorrow,week,all,task}) {
-    console.log(task.filter(task=>task.list_id ==3).length);
-    const [color, setColor] = useState(null);
-    const [list, setList] = useState({
-        nameList: "",
-        color: color,
-    });
-    const [tag, setTag] = useState({
-        nameTag: "",
-        color: color,
-    });
-    
+    const { url, component } = usePage()
+    console.log(url);
+    console.log(component);
     const colorset = [
         "bg-[#38bdf8]",
         "bg-[#fda4af]",
@@ -28,7 +20,19 @@ export default function Sidebar({listprops,tagprops,today,tomorrow,week,all,task
         "bg-[#a855f7]",
         "bg-[#4ade80]",
         "bg-[#a1a1aa]",
-    ];
+    ];;
+    const [color, setColor] = useState(colorset[0]);
+    const [list, setList] = useState({
+        nameList: "",
+        color: color,
+    });
+    console.log(list);
+    const [tag, setTag] = useState({
+        nameTag: "",
+        color: color,
+    });
+    
+ 
 
 
     const [labelColor, setLabelColor] = useState("text-[#2C3333]");
@@ -65,6 +69,7 @@ export default function Sidebar({listprops,tagprops,today,tomorrow,week,all,task
         compTag.current.classList.toggle("hidden");
     };
     function handleChange(e) {
+        console.log(e);
         const key = e.target.id;
         const value = e.target.value;
         setList((list) => ({
@@ -111,14 +116,22 @@ export default function Sidebar({listprops,tagprops,today,tomorrow,week,all,task
     };
     const changeColor = (value, old) => {
       if (value!=old) {
+          setColor(value);
         colorTag.current.classList.remove(old);
-        setColor(value);
+        setList((list) => ({
+            ...list,
+            color: value,
+        }));
       }
     };
     useEffect(() => {
         colorTag.current.classList.add(color);
     });
-
+    const notify = () => {
+        toast.info("Still in development!!", {
+            position: toast.POSITION.TOP_CENTER
+          })
+    }
     return (
         <>
                 
@@ -152,41 +165,41 @@ export default function Sidebar({listprops,tagprops,today,tomorrow,week,all,task
                 <div className="mb-6">
                     <h2 className="font-bold text-md">Tasks</h2>
                     <ul>
-                    <li className={` group w-full p-2  rounded hover:bg-[${listHover}] flex justify-between`}>
+                    <li className={` group w-full p-2 ${url === '/' ? 'bg-[#0A81D1] text-white ':''}  rounded hover:bg-[${listHover}] hover:text-[${textColor}]  flex justify-between`}>
                             <Link href={route('home')} className="w-full flex items-center text-md">
                                 <BsListCheck />
                                 <span className="ml-4 font-semibold group-hover:font-bold">
                                     All Task
                                 </span>
                             </Link>
-                            <div className={`px-2 rounded bg-slate-200 group-hover:bg-[#78E3FD]`}>{all}</div>
+                            <div className={`px-2 rounded ${url === '/' ? ' bg-[#0CAADC]  text-white ': 'bg-slate-200'} group-hover:bg-[#78E3FD]`}>{all}</div>
                         </li>
-                        <li className={`group w-full p-2 rounded hover:bg-[${listHover}] flex justify-between`}>
+                        <li className={`group w-full p-2 rounded hover:bg-[${listHover}]  ${url === '/upcoming' ? 'bg-[#0A81D1] text-white ':''} flex justify-between`}>
                             <Link   href={route('upcoming')} className="w-full flex items-center text-md">
                                 <MdOutlineDoubleArrow />
                                 <span className="ml-4 font-semibold group-hover:font-bold">
                                     Upcoming
                                 </span>
                             </Link>
-                            <div className={`px-2 rounded bg-slate-200 group-hover:bg-[#78E3FD]`}>{today+tomorrow+week}</div>
+                            <div className={`px-2 rounded ${url === '/upcoming' ? ' bg-[#0CAADC]  text-white ': 'bg-slate-200'} group-hover:bg-[#78E3FD]`}>{today+tomorrow+week}</div>
                         </li>
-                        <li className={`group w-full p-2  rounded hover:bg-[${listHover}] flex justify-between`}>
+                        <li className={`group w-full p-2  rounded hover:bg-[${listHover}]  ${url === '/today' ? 'bg-[#0A81D1] text-white ':''} flex justify-between`}>
                             <Link  href={route('today')} className="w-full flex items-center text-md">
                                 <BsListCheck />
                                 <span className="ml-4 font-semibold group-hover:font-bold">
                                     Today
                                 </span>
                             </Link>
-                            <div className={`px-2 rounded bg-slate-200 group-hover:bg-[#78E3FD]`}>{today}</div>
+                            <div className={`px-2 rounded ${url === '/today' ? ' bg-[#0CAADC]  text-white ': 'bg-slate-200'} group-hover:bg-[#78E3FD]`}>{today}</div>
                         </li>
-                        <li className={`group w-full p-2  rounded hover:bg-[${listHover}] flex justify-between`}>
-                            <Link href="" className="w-full flex items-center text-md">
+                        <li className={`group w-full p-2  rounded hover:bg-[${listHover}]  ${url === '/sticky' ? 'bg-[#0A81D1] text-white ':''} flex justify-between`}>
+                            <button onClick={notify} className="w-full flex items-center text-md">
                                 <BsStickyFill />
                                 <span className="ml-4 font-semibold group-hover:font-bold">
                                     Sticky Wall
                                 </span>
-                            </Link>
-                            <div className={`px-2 rounded bg-slate-200 group-hover:bg-[#78E3FD]`}>1</div>
+                            </button>
+                            <div className={`px-2 rounded ${url === '/sticky' ? ' bg-[#0CAADC]  text-white ': 'bg-slate-200'} group-hover:bg-[#78E3FD]`}>1</div>
                         </li>
                     </ul>
                 </div>
@@ -199,27 +212,27 @@ export default function Sidebar({listprops,tagprops,today,tomorrow,week,all,task
 
                             //    current.classList.add(category.color)
                             return (
-                                <li key = {key} className={`w-full p-2  rounded hover:bg-[${listHover}] flex justify-between`}>
+                                <li key = {key} className={`w-full p-2  rounded hover:bg-[${listHover}]  ${url === '/list/'+category.slug ? 'bg-[#0A81D1] text-white ':''} flex justify-between`}>
                                     <Link
                                         href={route('list',category.slug)}
-                                        className="flex items-center text-md"
+                                        className="flex items-center text-md w-full justify-between"
                                     >
                                         <div
                                             className={`h-4 w-4 rounded ${category.color}`}
                                         ></div>
-                                        <span className="ml-4 font-semibold hover:font-bold">
+                                        <span className="ml-4 font-semibold hover:font-bold overflow-hidden text-ellipsis w-7/12">
                                             {category.name}
                                         </span>
-                                    </Link>
-                                    <div className="px-2 rounded bg-slate-100">
+                                    <div className={`px-2 rounded  ${url === '/list/'+category.slug ? ' bg-[#0CAADC]  text-white ': 'bg-slate-200'}`}>
                                         {movieCount}
                                     </div>
+                                    </Link>
                                 </li>
                             );
                         })}
                     </ul>
                    <div className="">
-                     <div className={`w-full p-2  rounded hover:bg-[${listHover}] flex justify-between ${labelbg} ${labelColor} hover:text-[#2C3333]`}>
+                     <div className={`w-full p-2  rounded hover:bg-[${listHover}]  ${url === '/' ? 'bg-[#0A81D1] text-white ':''} flex justify-between ${labelbg} ${labelColor} hover:text-[#2C3333]`}>
                         <button
                             onClick={() => listComp()}
                             className="flex items-center text-md w-full"
@@ -248,7 +261,7 @@ export default function Sidebar({listprops,tagprops,today,tomorrow,week,all,task
                             <div className="flex gap-4 mb-4">
                                 <div
                                     ref={colorTag}
-                                    className={`h-4 w-4 ${color==null ? "bg-[#38bdf8]":color} rounded`}
+                                    className={`h-4 w-4 ${color} rounded`}
                                 ></div>
                                 <input
                                     id="nameList"
